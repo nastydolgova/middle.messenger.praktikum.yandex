@@ -1,0 +1,29 @@
+{{!< desktop}}
+
+    <section class="login__section">
+        <h2 class="login__title"> Регистрация </h2>
+    <form action="/login" method="post">
+        <label class="login__label">
+            Почта
+            <input class="login__input" type="email" name="email" placeholder=""  required>
+        </label>
+        <label class="login__label">
+            Логин
+            <input class="login__input" type="text" name="login" placeholder=""  required>
+        </label>
+        <label class="login__label">
+            Имя
+            <input class="login__input" type="text" name="first_name" placeholder=""  required>
+        </label>
+        <label class="login__label">
+            Фамилия
+            <input class="login__input" type="text" name="second_name" placeholder=""  required>
+        </label>
+        <label class="login__label">
+            Телефон
+            <input class="login__input" type="phone" name="phone" placeholder=""  required>
+        </label>
+        <input class="login__btn" type="submit" name="submit" value="Зарегистрироваться">
+    </form>
+    <a href="#" class="chat__link login__link">Войти</a>
+    </section>

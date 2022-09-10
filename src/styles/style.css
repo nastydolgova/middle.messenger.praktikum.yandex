@@ -1,0 +1,7 @@
+@import '../partials/chat-item/chat-item.css';
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
