@@ -1,21 +1,25 @@
 {{!< desktop}}
 
-<section class="chat-list">
-    <a href="#" class="chat-list__link chat__link"> 
-        Профиль 
-        <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 9L5 5L1 1" stroke="#999999"/>
-        </svg>
-    </a>
-    <input type="text" name="login" placeholder="Поиск"></input>
-    <div class="chats__wrp">
-        {{#each chats}}
-            <div>
-                {{> 'chat-item/chat-item'}}
-            </div>
-        {{/each}}
-    </div>
-    <div class="chat-field">
-        <p> Выберите чат чтобы отправить сообщение </p>
-    </div>
-</section>
+<div class="chat__box">
+    <section class="chat-list">
+        <div class="chat__info">
+            <a href="#" class="chat-list__link chat__link"> 
+                Профиль 
+                <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 9L5 5L1 1" stroke="#999999"/>
+                </svg>
+            </a>
+            <input class="class__list-search" type="text" name="login" placeholder="Поиск"></input>
+        </div>
+        <div class="chats__wrp">
+            {{#each chats}}
+                <div>
+                    {{> 'chat-item/chat-item'}}
+                </div>
+            {{/each}}
+        </div>
+    </section>
+    <section class="chat-field">
+        {{> 'chat/chat'}}
+    </section>
+</div>
