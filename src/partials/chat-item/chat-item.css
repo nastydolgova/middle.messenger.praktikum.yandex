@@ -9,6 +9,10 @@
     cursor: pointer;
 }
 
+.chats__item--active{
+    background-color: #E4EDFD;
+}
+
 .chats__item::after{
     position: absolute;
     content: "";
