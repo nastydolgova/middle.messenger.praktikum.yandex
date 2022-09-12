@@ -1,33 +1,21 @@
 
 {{#if save}}
-    {{#each fields}}
+    {{#each rfields}}
         <label class="form__label">
             {{label}}
             <input class="form__input" type="{{type}}" name="{{name}}">
         </label>
     {{/each}}
-    <label class="form__label">
-        Пароль
-        <input class="form__input" type="password" name="password">
-    </label>
     <input class="form__btn" type="submit" name="submit" value="{{title}}">
 {{/if}}
 
 {{#if edit}}
-    {{#each fields}}
+    {{#each efields}}
         <label class="form__label">
             {{label}}
             <input class="form__input" type="{{type}}" name="{{name}}">
         </label>
     {{/each}}
-    <label class="form__label">
-        Старый пароль
-        <input class="form__input" type="password" name="oldPassword">
-    </label>
-    <label class="form__label">
-        Новый пароль
-        <input class="form__input" type="password" name="newPassword">
-    </label>
     <input class="form__btn" type="submit" name="submit" value="{{title}}">
 {{/if}}
 

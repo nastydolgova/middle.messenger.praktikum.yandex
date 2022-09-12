@@ -20,4 +20,17 @@
         <a href="./edit.hbs" class="profile__link">Изменить данные</a>
         <a href="./login.hbs" class="profile__link profile__link--exit">Выйти</a> 
     </div>
+    <div class="profile__popup hidden">
+        <h4>Загрузить файл</h4>
+        <form method="post">
+            <label class="popup__input">
+                <span class="popup__input-text" type="text"></span>
+                <input type="file" name="file">        
+                <span class="popup__input-btn">Выберите файл</span>
+            </label>
+        </form>
+        <button type="submit" class="form__btn" >
+            Поменять
+        </button>
+    </div>
 </section>
