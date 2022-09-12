@@ -1,20 +1,41 @@
-<label class="login__label">
-    Почта
-    <input class="login__input" type="email" name="email" placeholder="" disabled="true">
-</label>
-<label class="login__label">
-    Логин
-    <input class="login__input" type="text" name="login" placeholder="" disabled="true">
-</label>
-<label class="login__label">
-    Имя
-    <input class="login__input" type="text" name="first_name" placeholder="" disabled="true">
-</label>
-<label class="login__label">
-    Фамилия
-    <input class="login__input" type="text" name="second_name" placeholder="" disabled="true">
-</label>
-<label class="login__label">
-    Телефон
-    <input class="login__input" type="phone" name="phone" placeholder="" disabled="true">
-</label>
+
+{{#if save}}
+    {{#each fields}}
+        <label class="form__label">
+            {{label}}
+            <input class="form__input" type="{{type}}" name="{{name}}">
+        </label>
+    {{/each}}
+    <label class="form__label">
+        Пароль
+        <input class="form__input" type="password" name="password">
+    </label>
+    <input class="form__btn" type="submit" name="submit" value="{{title}}">
+{{/if}}
+
+{{#if edit}}
+    {{#each fields}}
+        <label class="form__label">
+            {{label}}
+            <input class="form__input" type="{{type}}" name="{{name}}">
+        </label>
+    {{/each}}
+    <label class="form__label">
+        Старый пароль
+        <input class="form__input" type="password" name="oldPassword">
+    </label>
+    <label class="form__label">
+        Новый пароль
+        <input class="form__input" type="password" name="newPassword">
+    </label>
+    <input class="form__btn" type="submit" name="submit" value="{{title}}">
+{{/if}}
+
+{{#if readonly}}
+    {{#each fields}}
+        <label class="form__label">
+            {{label}}
+            <input class="form__input" type="{{type}}" name="{{name}}" placeholder="{{label}}" readonly>
+        </label>
+    {{/each}}
+{{/if}}

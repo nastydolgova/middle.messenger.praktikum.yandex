@@ -95,12 +95,23 @@ p{
   align-items: center;
 }
 
+.edit,
 .profile{
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 60px 0 60px 0;
   width: 100%;
+  background-color: #fbfbfb;
+}
+
+.edit form{
+  margin-top: 5%;
+}
+
+.edit .form__label,
+.profile .form__label{
+  width: 510px;
 }
 
 .profile__change-avatar{
@@ -109,6 +120,7 @@ p{
   background-color: transparent;
   cursor: pointer;
   position: relative;
+  margin-bottom: 20px;
 }
 
 .profile__change-avatar span{
@@ -149,6 +161,12 @@ p{
   border-bottom: 1px solid #EAEAEA;
 }
 
+.profile__events{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
 .item__name{
   color: #1E1E1E;
   font-weight: 500;
@@ -160,7 +178,6 @@ p{
   font-weight: 500;
   font-size: 13px;
 }
-
 
 .profile__link--back{
   width: 64px;
@@ -177,17 +194,42 @@ p{
   border-bottom: none;
 }
 
+.login__section{
+  width: 610px;
+  margin: 0 auto;
+  background: rgb(251,251,251);
+  background: linear-gradient(0deg, rgba(251,251,251,1) 62%, rgba(51,105,243,0.258140756302521) 100%);
+  padding: 0 50px;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+}
 
+.login__title{
+  text-align: center;
+  margin-top: 40%;
+} 
 
+.registration .login__title{
+  margin-top: 20%;
+}
 
+form{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
 
+.login__link{
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+}
 
-
-
-
-
-
-
+.login__error{
+  align-self: flex-start;
+  color: #FF2F2F;
+  font-size: 9px;
+}
 
 .hidden {
   display: none

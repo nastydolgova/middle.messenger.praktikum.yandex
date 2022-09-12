@@ -1,10 +1,8 @@
 {{!< desktop}}
-
-    <section class="login__section">
-        <h2 class="login__title"> Регистрация </h2>
-    <form action="/login" method="post">
-        {{> 'form/form'}} 
-        <input class="login__btn" type="submit" name="submit" value="Зарегистрироваться">
+<section class="login__section registration">
+    <h2 class="login__title"> Регистрация </h2>
+    <form>
+        {{> 'form/form' save=true label="Пароль" title="Зарегистрироваться"}}
     </form>
-    <a href="./login.hbs" class="chat__link login__link">Войти</a>
-    </section>
+    <a href="./login.hbs" class="form__link">Войти</a>
+</section>
