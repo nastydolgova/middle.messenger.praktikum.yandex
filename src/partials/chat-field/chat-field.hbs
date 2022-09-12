@@ -1,5 +1,5 @@
 <div class="chat__wrp">
-    <div class="user__info">
+    <div class="wrp__user">
         <img class="user__img" src="#" width="34" height="34">
         <p class="user__name">Вадим</p>
         <button class="user__button">
@@ -14,7 +14,9 @@
         </div>
     </div>
     <div class="wrp__msgs">
+        {{> 'wrp__msgs/wrp__msgs'}}
     </div>
     <div class="wrp__send">
+        {{> 'send-msg/send-msg'}}
     </div>
 </div>
