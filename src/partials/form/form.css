@@ -46,14 +46,6 @@
     border: none;
 }
 
-.form__btn:hover{
-    opacity: 0.6;
-}
-
-.form__btn:active{
-    opacity: 0.6;
-}
-
 .form__link{
     display: inline-block;
     width: 100%;
