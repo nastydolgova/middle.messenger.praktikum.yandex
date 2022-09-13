@@ -1,0 +1,72 @@
+@import '../partials/chat-item/chat-item.css';
+@import '../partials/chat-empty/chat-empty.css';
+@import '../partials/chat-field/chat-field.css';
+@import '../partials/user-popup/user-popup.css';
+@import '../partials/send-msg/send-msg.css';
+@import '../partials/wrp__msgs/wrp__msgs.css';
+@import '../partials/msg-info/msg-info.css';
+@import '../partials/form/form.css';
+@import '../pages/edit/edit.css';
+@import '../pages/errors/errors.css';
+@import '../pages/index/index.css';
+@import '../pages/login/login.css';
+@import '../pages/profile/profile.css';
+@import '../pages/registration/registration.css';
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+p{
+  margin: 0;
+}
+
+.container{
+  max-width: 100%;
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+  color: #1E1E1E;
+  width: 1280px;
+  height: 720px;
+  border: 1px solid #ededed;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  margin: 50px auto 0 auto;
+}
+
+.btn__events:hover{
+  opacity: 0.6;
+}
+
+.btn__events:active{
+  opacity: 0.8;
+}
+
+.edit,
+.profile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 0 60px 0;
+  width: 100%;
+  background-color: #fbfbfb;
+  position: relative;
+}
+
+.edit .form__label,
+.profile .form__label{
+  width: 510px;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}

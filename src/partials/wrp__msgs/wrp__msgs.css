@@ -1,0 +1,46 @@
+.msgs__date{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+    margin: 15px 0;
+}
+
+.msgs__item{
+    max-width: 402px;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.msgs__item--other{
+    background-color: #dedede;
+    border-radius: 0 10px 10px 10px;
+}
+
+.msgs__item--other svg{
+    visibility: hidden;
+}
+
+.msgs__item--img{
+    background-color: transparent;
+    padding-bottom: 0;
+    width: 336px;
+}
+
+.msgs__item--my{
+    background-color: #E4EDFD;
+    border-radius:10px 10px 0 10px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.msgs__item-info{
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    font-size: 9px;
+    color: #999999;
+}

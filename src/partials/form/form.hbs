@@ -1,0 +1,29 @@
+
+{{#if save}}
+    {{#each registration}}
+        <label class="form__label">
+            {{label}}
+            <input class="form__input" type="{{type}}" name="{{name}}">
+        </label>
+    {{/each}}
+    <input class="form__btn btn__events" type="submit" name="submit" value="{{title}}">
+{{/if}}
+
+{{#if edit}}
+    {{#each change}}
+        <label class="form__label">
+            {{label}}
+            <input class="form__input" type="{{type}}" name="{{name}}">
+        </label>
+    {{/each}}
+    <input class="form__btn btn__events" type="submit" name="submit" value="{{title}}">
+{{/if}}
+
+{{#if readonly}}
+    {{#each fields}}
+        <label class="form__label">
+            {{label}}
+            <input class="form__input" type="{{type}}" name="{{name}}" placeholder="{{label}}" readonly>
+        </label>
+    {{/each}}
+{{/if}}
