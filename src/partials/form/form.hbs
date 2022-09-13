@@ -1,6 +1,6 @@
 
 {{#if save}}
-    {{#each rfields}}
+    {{#each registration}}
         <label class="form__label">
             {{label}}
             <input class="form__input" type="{{type}}" name="{{name}}">
@@ -10,7 +10,7 @@
 {{/if}}
 
 {{#if edit}}
-    {{#each efields}}
+    {{#each change}}
         <label class="form__label">
             {{label}}
             <input class="form__input" type="{{type}}" name="{{name}}">
