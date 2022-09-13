@@ -1,9 +1,16 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
 
-app.use(express.static('dist'));
+const app = express();
+const PORT = 3000;
+const path = require('path');
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+app.use(express.static('./dist'));
+
+app.get( /(.*?)/, (req, res) => {
+    res.sendFile(__dirname + '/dist/index.html');
+
+});
+
+app.listen(PORT, function() {
+    console.log(`Your server available at http://localhost:${PORT}`);
+});
