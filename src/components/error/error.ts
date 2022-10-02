@@ -1,17 +1,17 @@
-import Block from '../../utils/Block';
+import Block from '../../utils/Block'
 
-import './error.css';
+import './error.css'
 
 interface ErrorProps {
-  text?: string;
+    text?: string
 }
 
 export class ErrorComponent extends Block<ErrorProps> {
-  static componentName = 'ErrorComponent';
+    static componentName = 'ErrorComponent'
 
-  protected render(): string {
-    return `
-      <div class="error">{{#if text}}{{text}}{{/if}}</div>
-    `
-  }
+    protected render(): string {
+        return `
+            <div class="error">{{#if text}}{{text}}{{/if}}</div>
+        `
+    }
 }

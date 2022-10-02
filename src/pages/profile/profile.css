@@ -1,122 +1,122 @@
 
 .profile__popup{
-  width: 340px;
-  height: 260px;
-  background-color: #fff;
-  border-radius: 12px;
-  position: absolute;
-  top: 50%;
-  margin-top: -170px;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    width: 340px;
+    height: 260px;
+    background-color: #fff;
+    border-radius: 12px;
+    position: absolute;
+    top: 50%;
+    margin-top: -170px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile__change-avatar{
-  border: none;
-  padding: 0;
-  background-color: transparent;
-  cursor: pointer;
-  position: relative;
-  margin-bottom: 20px;
-  width: 130px;
-  height: 130px;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 20px;
+    width: 130px;
+    height: 130px;
 }
 
 .profile__change-avatar span{
-  position: absolute;
-  top: 60px;
-  width: 100%;
-  text-align: center;
-  display: none;
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    text-align: center;
+    display: none;
 }
 
 .profile__change-avatar:hover span{
-  display: inline-block;
-  color: #fff;
-  z-index: 3;
+    display: inline-block;
+    color: #fff;
+    z-index: 3;
 }
 
 .profile__img{
-  background: #EFEFEF;
-  border-radius: 50%;
+    background: #EFEFEF;
+    border-radius: 50%;
 }
 
 .profile__change-avatar:hover img{
-  filter: brightness(80%)
+    filter: brightness(80%)
 }
 
 .profile__list{
-  list-style-type: none;
-  padding: 0;
-  width: 510px;
-  margin: 40px 0;
+    list-style-type: none;
+    padding: 0;
+    width: 510px;
+    margin: 40px 0;
 }
 
 .profile__list-item{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #EAEAEA;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #EAEAEA;
 }
 
 .profile__events{
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
 }
 
 .profile__link--exit{
-  color: #FF0000;
-  border-bottom: none;
+    color: #FF0000;
+    border-bottom: none;
 }
 
 .popup__input {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .popup__input-text {
-  padding: 0 10px;
-  line-height: 40px;
-  text-align: left;
-  height: 40px;
-  display: block;
-  float: left;
-  box-sizing: border-box;
-  width: 150px;
-  border-radius: 6px 0px 0 6px;
-  border: 1px solid #ddd;
+    padding: 0 10px;
+    line-height: 40px;
+    text-align: left;
+    height: 40px;
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    width: 150px;
+    border-radius: 6px 0px 0 6px;
+    border: 1px solid #ddd;
 }
 
 .popup__input-btn {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  outline: none;
-  text-decoration: none;
-  font-size: 14px;
-  vertical-align: middle;
-  color: rgb(255 255 255);
-  text-align: center;
-  border-radius: 0 4px 4px 0;
-  background-color: #3369f3;
-  line-height: 22px;
-  height: 40px;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  border: none;
-  margin: 0;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    font-size: 14px;
+    vertical-align: middle;
+    color: rgb(255 255 255);
+    text-align: center;
+    border-radius: 0 4px 4px 0;
+    background-color: #3369f3;
+    line-height: 22px;
+    height: 40px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border: none;
+    margin: 0;
 }
 
 .popup__input input[type=file] {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
-  display: block;
-  width: 0;
-  height: 0;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
 }

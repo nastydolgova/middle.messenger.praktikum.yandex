@@ -1,17 +1,17 @@
 .controller-input{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .form__label{
-  width: 100%;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border-bottom: 1px solid #EAEAEA;
-  font-weight: 500;
-  font-size: 13px;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid #EAEAEA;
+    font-weight: 500;
+    font-size: 13px;
 }

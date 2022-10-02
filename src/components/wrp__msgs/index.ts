@@ -1,1 +1,1 @@
-export { WrpMsgs as default } from './wrp__msgs';
+export { WrpMsgs as default } from './wrp__msgs'

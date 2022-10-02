@@ -1,4 +1,4 @@
-import Block from 'utils/Block';
+import Block from 'utils/Block'
 
 import './profile.css'
 
@@ -41,7 +41,7 @@ export class ProfilePage extends Block {
                     </div>
                 </section>
             </div>
-        `;
+        `
     }
 }
 

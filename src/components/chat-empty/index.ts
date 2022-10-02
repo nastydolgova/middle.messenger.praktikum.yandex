@@ -1,1 +1,1 @@
-export { ChatEmpty as default } from './chat-empty';
+export { ChatEmpty as default } from './chat-empty'

@@ -1,1 +1,1 @@
-export { UserPopup as default } from './user-popup';
+export { UserPopup as default } from './user-popup'

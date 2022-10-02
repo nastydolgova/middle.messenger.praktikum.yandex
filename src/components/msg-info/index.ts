@@ -1,1 +1,1 @@
-export { MsgInfo as default } from './msg-info';
+export { MsgInfo as default } from './msg-info'

@@ -1,1 +1,1 @@
-export { ChatField as default } from './chat-field';
+export { ChatField as default } from './chat-field'

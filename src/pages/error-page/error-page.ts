@@ -1,5 +1,5 @@
-import Block from 'utils/Block';
-import './error-page.css';
+import Block from 'utils/Block'
+import './error-page.css'
 
 export class ErrorPage extends Block {
 
@@ -12,7 +12,7 @@ export class ErrorPage extends Block {
                 <a class="error__link btn__events" href="#">Назад к чатам</a>
             </div>
         </div>
-        `;
+        `
     }
 }
 

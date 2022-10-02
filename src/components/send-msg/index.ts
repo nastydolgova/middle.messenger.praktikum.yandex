@@ -1,1 +1,1 @@
-export { SendMsg as default } from './send-msg';
+export { SendMsg as default } from './send-msg'

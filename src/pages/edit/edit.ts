@@ -1,6 +1,6 @@
-import Block from 'utils/Block';
+import Block from 'utils/Block'
 
-import './edit.css';
+import './edit.css'
 
 export class EditPage extends Block {
     render() {
@@ -18,6 +18,6 @@ export class EditPage extends Block {
                     {{{ Form }}}
                 </section>
             </div>
-        `;
+        `
     }
 }

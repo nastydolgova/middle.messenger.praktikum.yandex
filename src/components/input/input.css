@@ -1,26 +1,26 @@
 .input {
-  width: 100%;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border-radius: var(--message-border-radius);
-  background: var(--message-my-background);
-  border: 0;
-  margin-bottom: 5px;
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border-radius: var(--message-border-radius);
+    background: var(--message-my-background);
+    border: 0;
+    margin-bottom: 5px;
 }
 
 .form__input{
-  border: none;
-  text-align: right;
-  color: #999;
-  width: 300px;
-  background-color: transparent;
+    border: none;
+    text-align: right;
+    color: #999;
+    width: 300px;
+    background-color: transparent;
 }
 
 .form__input::placeholder {
-  color: #999;
-  font-family: Tahoma, Verdana, sans-serif;
+    color: #999;
+    font-family: Tahoma, Verdana, sans-serif;
 }
 
 .form__input:focus-visible{
-  outline: none;
+    outline: none;
 }
