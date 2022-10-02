@@ -12,7 +12,8 @@
     "utils": "./src/utils",
     "component": "./src/component",
     "helpers": "./src/helpers",
-    "pages": "./src/pages"
+    "pages": "./src/pages",
+    "models": "./src/models"
   },
   "keywords": [],
   "author": "",

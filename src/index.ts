@@ -36,7 +36,7 @@ registerComponent(ControlledInput)
 registerComponent(Button)
 
 document.addEventListener("DOMContentLoaded", () => {
-    renderDOM(new LoginPage())
+    // renderDOM(new LoginPage())
     renderDOM(new RegPage())
 
     // renderDOM(new ChatPage())

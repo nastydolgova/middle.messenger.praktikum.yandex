@@ -57,14 +57,7 @@ export class Form extends Block {
     }
 }
 
-// {{#if save}}
-// {{#each registration}}
-//     <label class="form__label">
-//         {{label}}
-//         <input class="form__input" type="{{type}}" name="{{name}}">
-//     </label>
-// {{/each}}
-// {{/if}}
+
 
 // {{#if edit}}
 // {{#each change}}

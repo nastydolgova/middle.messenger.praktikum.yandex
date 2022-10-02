@@ -1,14 +1,6 @@
 [
-    {
-        "type":"email",
-        "label": "Почта",
-        "name": "email"
-    },
-    {
-        "type":"text",
-        "label": "Логин",
-        "name": "login"
-    },
+
+
     {
         "type":"text",
         "label": "Имя",
@@ -23,10 +15,6 @@
         "type":"phone",
         "label": "Телефон",
         "name": "phone"        
-    },
-    {
-        "type":"password",
-        "label": "Пароль",
-        "name": "password"           
     }
+
 ]

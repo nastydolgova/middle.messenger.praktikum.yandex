@@ -3,38 +3,12 @@ import { validateForm, ValidateType } from 'helpers/validateForm'
 
 import './login.css'
 
-type Field = {
-    ref: string
-    type: string
-    name: string
-    placeholder: string
-    label: string
-}
-
 export class LoginPage extends Block {
     constructor(){
         super()
 
         this.setProps({
             error: '',
-            loginValue: '',
-            passwordValue: '',
-            fields: [
-                {
-                    ref: 'loginInputRef',
-                    type: 'text',
-                    name: 'login',
-                    placeholder: 'Введите имя',
-                    label: 'Имя пользователя'
-                },
-                {
-                    ref: 'passwordInputRef',
-                    type: 'password',
-                    name: 'password',
-                    placeholder: 'Введите пароль',
-                    label: 'Пароль'
-                }
-            ] as Field[],
             onInput: (): void  => {
                 this.props.validate()
             },
@@ -56,6 +30,8 @@ export class LoginPage extends Block {
                 ])
                 //@ts-ignore
                 this.refs.passwordInputRef.refs.errorRef.setProps({ text: passwordErrorMsg })
+                
+                if(!this.props.loginErrorMsg && !this.props.passwordErrorMsg) console.log(loginEl.value, passwordEl.value)
             }
         })
     }
@@ -65,17 +41,22 @@ export class LoginPage extends Block {
             <div class="container">
                 <section class="login__section">
                     <h1 class="login__title"> Вход </h1>
-                    {{#each fields}}
                         {{{ ControlledInput
-                            ref="{{ref}}"
+                            ref="loginInputRef"
                             onInput=onInput
                             onFocus=onFocus
-                            type="{{type}}"
-                            name="{{name}}"
-                            placeholder="{{placeholder}}"
-                            label="{{label}}"
+                            type="text"
+                            name="login"
+                            label="Имя пользователя"
                         }}}
-                    {{/each}}
+                        {{{ ControlledInput
+                            ref="passwordInputRef"
+                            onInput=onInput
+                            onFocus=onFocus
+                            type="password"
+                            name="password"
+                            label="Пароль"
+                        }}}
                     {{{Button text="Авторизоваться" onClick=onSubmit}}}
                     <a href="#" class="form__link btn__events">Нет аккаунта?</a>
                 </section>
