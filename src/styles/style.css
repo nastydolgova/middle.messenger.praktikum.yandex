@@ -1,18 +1,3 @@
-@import '../partials/chat-item/chat-item.css';
-@import '../partials/chat-empty/chat-empty.css';
-@import '../partials/chat-field/chat-field.css';
-@import '../partials/user-popup/user-popup.css';
-@import '../partials/send-msg/send-msg.css';
-@import '../partials/wrp__msgs/wrp__msgs.css';
-@import '../partials/msg-info/msg-info.css';
-@import '../partials/form/form.css';
-@import '../pages/edit/edit.css';
-@import '../pages/errors/errors.css';
-@import '../pages/index/index.css';
-@import '../pages/login/login.css';
-@import '../pages/profile/profile.css';
-@import '../pages/registration/registration.css';
-
 *,
 *:before,
 *:after {
@@ -66,6 +51,44 @@ form{
   width: 100%;
   align-items: center;
 }
+
+.profile__link--back{
+  width: 64px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #EAEAEA;
+  background: #FBFBFB;
+}
+
+.profile__arrow-back{
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  background-color: #3369F3;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__section{
+  width: 610px;
+  margin: 0 auto;
+  background: rgb(251,251,251);
+  background: linear-gradient(0deg, rgba(251,251,251,1) 62%, rgba(51,105,243,0.258140756302521) 100%);
+  padding: 0 50px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+}
+
+.login__title{
+  text-align: center;
+  margin-top: 40%;
+} 
 
 .hidden {
   display: none;

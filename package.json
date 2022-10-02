@@ -1,22 +1,40 @@
 {
   "name": "chat",
   "version": "1.0.0",
-  "description": "",
+  "description": "", 
   "scripts": {
-    "dev": "parcel src/pages/index/index.hbs --no-cache",
     "start": "parcel build src/pages/index/index.hbs && node ./server.js",
-    "build": "parcel build src/pages/index/index.hbs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "parcel build src/index.html --no-cache --public-url ./",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel src/index.html --no-cache"
+  },
+  "alias":{
+    "utils": "./src/utils",
+    "component": "./src/component",
+    "helpers": "./src/helpers",
+    "pages": "./src/pages"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars": "1.0.9",
+    "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
+    "@types/node": "18.7.23",
+    "@typescript-eslint/eslint-plugin": "5.38.0",
+    "@typescript-eslint/parser": "5.38.0",
+    "eslint-config-airbnb": "19.0.4",
     "parcel": "2.7.0",
-    "postcss-import": "15.0.0"
+    "postcss": "8.4.16",
+    "postcss-import": "12.0.1",
+    "postcss-modules": "4.3.1",
+    "stylelint": "14.12.1",
+    "typescript": "4.8.3"
   },
   "dependencies": {
-    "express": "4.18.1"
+    "babel-core": "6.26.3",
+    "express": "4.18.1",
+    "handlebars": "4.7.7",
+    "nanoid": "4.0.0"
   }
 }
