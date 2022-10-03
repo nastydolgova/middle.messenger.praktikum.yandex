@@ -1,8 +1,49 @@
 import Block from 'utils/Block'
-
+import { Field } from 'models/FieldModel'
 import './profile.css'
 
+const fields: Field[] = [
+    {
+        type: 'text',
+        name: 'login',
+        label: 'Имя пользователя',
+        value: 'Ivanov'
+    },
+    {
+        type: 'email',
+        name: 'email',
+        label: 'Почта',
+        value: 'Iv@ya.ru'
+    },
+    {
+        type: 'text',
+        name: 'first_name',
+        label: 'Имя',
+        value: 'Ivan'
+    },
+    {
+        type: 'text',
+        name: 'second_name',
+        label: 'Фамилия',
+        value: 'Ivanov'
+    },
+    {
+        type: 'phone',
+        name: 'phone',
+        label: 'Телефон',
+        value: '+7999999999'
+    }
+] as Field[]
+
 export class ProfilePage extends Block {
+    constructor(){
+        super()
+
+        this.setProps({
+            isOpen: false,
+        })
+    }
+
     render() {
         return `
             <div class="container">
@@ -20,30 +61,27 @@ export class ProfilePage extends Block {
                         <img class="profile__img" src="#" width="130" height="130">
                     </button>
                     <form> 
-                        {{{ Form }}}
+                        ${(fields.map(item => 
+                            `{{{ControlledInput
+                                ref="${item.name + `InputRef`}"
+                                readonly="readonly"
+                                type="${item.type}"
+                                name="${item.name}"
+                                label="${item.label}"
+                                value="${item.value}"
+                            }}}
+                            `
+                        )).join(' ')}
                     </form>
                     <div class="profile__events">
-                        <a href="../edit/edit.hbs" class="profile__link">Изменить данные</a>
-                        <a href="../login/login.hbs" class="profile__link profile__link--exit">Выйти</a> 
+                        <a href="/edit" class="profile__link">Изменить данные</a>
+                        <a href="/login" class="profile__link profile__link--exit">Выйти</a> 
                     </div>
-                    <div class="profile__popup hidden">
-                        <h4>Загрузить файл</h4>
-                        <form method="post">
-                            <label class="popup__input">
-                                <span class="popup__input-text" type="text"></span>
-                                <input type="file" name="file">        
-                                <span class="popup__input-btn">Выберите файл</span>
-                            </label>
-                        </form>
-                        <button type="submit" class="form__btn btn__events">
-                            Поменять
-                        </button>
-                    </div>
+                    {{#if isOpen}}
+                        {{{ AvatarPopUp }}}
+                    {{/if}}
                 </section>
             </div>
         `
     }
 }
-
-// {{> 'form/form' readonly=true}} 
-

@@ -1,90 +1,85 @@
 import Block from 'utils/Block'
 import { validateForm, ValidateType } from 'helpers/validateForm'
 import { Field } from 'models/FieldModel'
+import Info from 'models/InfoModel'
 
 import './registration.css'
+
+const fields: Field[] = [
+    {
+        type: 'text',
+        name: 'login',
+        label: 'Имя пользователя'
+    },
+    {
+        type: 'password',
+        name: 'password',
+        label: 'Пароль'
+    },
+    {
+        type: 'email',
+        name: 'email',
+        label: 'Почта'
+    },
+    {
+        type: 'text',
+        name: 'first_name',
+        label: 'Имя'
+    },
+    {
+        type: 'text',
+        name: 'second_name',
+        label: 'Фамилия'
+    },
+    {
+        type: 'phone',
+        name: 'phone',
+        label: 'Телефон'
+    },
+] as Field[]
 
 export class RegPage extends Block {
     constructor(){
         super()
 
         this.setProps({
-            error: '',
-            fields: [
-                {
-                    ref: 'loginInputRef',
-                    type: 'text',
-                    name: 'login',
-                    label: 'Имя пользователя'
-                },
-                {
-                    ref: 'passwordInputRef',
-                    type: 'password',
-                    name: 'password',
-                    label: 'Пароль'
-                },
-                {
-                    ref: 'mailInputRef',
-                    type: 'email',
-                    name: 'email',
-                    label: 'Почта'
-                },
-                {
-                    ref: 'firstNameInputRef',
-                    type: 'text',
-                    name: 'first_name',
-                    label: 'Имя'
-                },
-                {
-                    ref: 'secondNameInputRef',
-                    type: 'text',
-                    name: 'second_name',
-                    label: 'Фамилия'
-                },
-                {
-                    ref: 'phoneInputRef',
-                    type: 'phone',
-                    name: 'phone',
-                    label: 'Телефон'
-                },
-            ] as Field[],
-            onInput: (): void  => {
-                this.props.validate()
+            onInput: (e: any): void  => {
+                let errorMsg = validateForm([
+                    {type: e.target.name, value: e.target.value},
+                ]) 
+                // @ts-ignore
+                this.refs[e.target.name + 'InputRef'].refs.errorRef.setProps({ text: errorMsg })
+                let field = fields.find((item: Field) => item.name == e.target.name)
+                if(field) field.value = e.target.value
             },
             onFocus: (): void => console.log('focus'),
-            onSubmit: (): void => {
+            onSubmit: (e: any): void => {
+                e.preventDefault()
                 this.props.validate()
+                let isCorrect = true
+                fields.forEach((item: Field) => {
+                    //@ts-ignore
+                    if (this.refs[item.ref].refs.errorRef.props.text != '') isCorrect = false
+                })
+                if (isCorrect) {
+                    let info: any[] = []
+                    fields.forEach((item: Field) => {
+                        if(item.value){
+                            info.push([item.name , item.value])
+                        }
+                    })
+                    console.log(Object.fromEntries(info) as Info)
+                }
             },
             validate: (): void => {
-                this.props.fields.forEach((field: Field) => {
+                fields.forEach((field: Field) => {
                     let atr = `input[name="${field.name}"]`
                     let inputEl = this.element?.querySelector(atr) as HTMLInputElement
                     let errorMsg = validateForm([
                         {type: inputEl.name, value: inputEl.value},
                     ]) 
-                    console.log(this.refs)
-                    console.log(this.refs[field.ref])
                     //@ts-ignore
                     this.refs[field.ref].refs.errorRef.setProps({ text: errorMsg })
-                // })
-                // const loginEl = this.element?.querySelector('input[name="login"]') as HTMLInputElement
-                // const passwordEl = this.element?.querySelector('input[name=password]') as HTMLInputElement
-                // // const 
-                
-                
-                // const loginErrorMsg = validateForm([
-                //     {type: ValidateType.Login, value: loginEl.value},
-                // ]) 
-                // //@ts-ignore
-                // this.refs.loginInputRef.refs.errorRef.setProps({ text: loginErrorMsg })
-
-                // const passwordErrorMsg = validateForm([
-                //     {type: ValidateType.Password, value: passwordEl.value}
-                // ])
-                // //@ts-ignore
-                // this.refs.passwordInputRef.refs.errorRef.setProps({ text: passwordErrorMsg })
-                // if(!this.props.loginErrorMsg && !this.props.passwordErrorMsg) console.log(loginEl.value, passwordEl.value)
-            // }
                 })
             }
         })
@@ -94,132 +89,22 @@ export class RegPage extends Block {
         return `
             <div class="container">
                 <section class="login__section">
-                    <h1 class="login__title"> Вход </h1>
-                    {{#each fields}}
-                        {{{ ControlledInput
-                            ref="{{ref}}"
-                            onInput=onInput
-                            onFocus=onFocus
-                            type="{{type}}"
-                            name="{{name}}"
-                            label="{{label}}"
-                        }}}
-                    {{/each}}
+                    <h1 class="login__title"> Регистрация </h1>
+                        ${(fields.map(item => 
+                            `{{{ControlledInput
+                                ref="${item.name + `InputRef`}"
+                                type="${item.type}"
+                                name="${item.name}"
+                                label="${item.label}"
+                                onInput=onInput
+                                onFocus=onFocus
+                            }}}
+                            `
+                        )).join(' ')}
                     {{{Button text="Зарегистрироваться" onClick=onSubmit}}}
-                    <a href="#" class="form__link btn__events">Войти</a>
+                    <a href="/login" class="form__link btn__events">Войти</a>
                 </section>
             </div>
         `
     }
-//     render() {
-//         return `
-//             <div class="container">
-//                 <section class="login__section registration">
-//                     <h2 class="login__title"> Регистрация </h2>
-//                     <form>
-//                         {{{ Form }}}
-//                     </form>
-//                     <a href="" class="form__link btn__events">Войти</a>
-//                 </section>
-//             </div>
-//         `
-//     }
 }
-
-// {{> 'form/form' save=true label="Пароль" title="Зарегистрироваться"}}
-
-// {{#if save}}
-// {{#each registration}}
-//     <label class="form__label">
-//         {{label}}
-//         <input class="form__input" type="{{type}}" name="{{name}}">
-//     </label>
-// {{/each}}
-// {{/if}}
-
-// import Block from 'utils/Block'
-// import { validateForm, ValidateType } from 'helpers/validateForm'
-
-// import './login.css'
-
-// type Field = {
-//     ref: string
-//     type: string
-//     name: string
-//     placeholder: string
-//     label: string
-// }
-
-// export class LoginPage extends Block {
-//     constructor(){
-//         super()
-
-//         this.setProps({
-//             error: '',
-//             loginValue: '',
-//             passwordValue: '',
-//             fields: [
-//                 {
-//                     ref: 'loginInputRef',
-//                     type: 'text',
-//                     name: 'login',
-//                     placeholder: 'Введите имя',
-//                     label: 'Имя пользователя'
-//                 },
-//                 {
-//                     ref: 'passwordInputRef',
-//                     type: 'password',
-//                     name: 'password',
-//                     placeholder: 'Введите пароль',
-//                     label: 'Пароль'
-//                 }
-//             ] as Field[],
-//             onInput: (): void  => {
-//                 this.props.validate()
-//             },
-//             onFocus: (): void => console.log('focus'),
-//             onSubmit: (): void => {
-//                 this.props.validate()
-//             },
-//             validate: (): void => {
-//                 const loginEl = this.element?.querySelector('input[name="login"]') as HTMLInputElement
-//                 const passwordEl = this.element?.querySelector('input[name=password]') as HTMLInputElement
-//                 const loginErrorMsg = validateForm([
-//                     {type: ValidateType.Login, value: loginEl.value},
-//                 ]) 
-//                 //@ts-ignore
-//                 this.refs.loginInputRef.refs.errorRef.setProps({ text: loginErrorMsg })
-
-//                 const passwordErrorMsg = validateForm([
-//                     {type: ValidateType.Password, value: passwordEl.value}
-//                 ])
-//                 //@ts-ignore
-//                 this.refs.passwordInputRef.refs.errorRef.setProps({ text: passwordErrorMsg })
-//                  if(!this.props.loginErrorMsg && !this.props.passwordErrorMsg) console.log(loginEl.value, passwordEl.value)
-//             }
-//         })
-//     }
-
-//     render() {
-//         return `
-//             <div class="container">
-//                 <section class="login__section">
-//                     <h1 class="login__title"> Вход </h1>
-//                     {{#each fields}}
-//                         {{{ ControlledInput
-//                             ref="{{ref}}"
-//                             onInput=onInput
-//                             onFocus=onFocus
-//                             type="{{type}}"
-//                             name="{{name}}"
-//                             placeholder="{{placeholder}}"
-//                             label="{{label}}"
-//                         }}}
-//                     {{/each}}
-//                     {{{Button text="Авторизоваться" onClick=onSubmit}}}
-//                     <a href="#" class="form__link btn__events">Нет аккаунта?</a>
-//                 </section>
-//             </div>
-//         `
-//     }
-// }

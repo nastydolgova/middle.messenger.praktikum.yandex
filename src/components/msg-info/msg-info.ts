@@ -26,3 +26,4 @@ export class MsgInfo extends Block {
         `
     }
 }
+

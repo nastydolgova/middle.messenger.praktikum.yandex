@@ -8,6 +8,8 @@ interface InputProps {
     onBlur?: () => void
     type?: 'text' | 'password' | 'email'
     name?: string
+    readonly?: string
+    value?: string
 }
 
 export class Input extends Block {
@@ -19,7 +21,8 @@ export class Input extends Block {
 
     protected render(): string {
         return `
-            <input  class="form__input" name="{{name}}" type="{{type}}">
+            <input  class="form__input" name="{{name}}" type="{{type}}" value={{value}} {{readonly}}>
         `
     }
 }
+

@@ -11,6 +11,7 @@ interface ControlledInputProps {
     error?: string
     name?: string
     label?: string
+    readonly?: string
 }
 
 export class ControlledInput extends Block {
@@ -41,6 +42,8 @@ export class ControlledInput extends Block {
                         onFocus=onFocus
                         onInput=onInput
                         onBlur=onBlur
+                        readonly=readonly
+                        value=value
                     }}}
                 </label>
                 {{{ErrorComponent ref="errorRef" text=error}}}

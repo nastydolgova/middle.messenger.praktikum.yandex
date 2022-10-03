@@ -9,16 +9,18 @@ export class LoginPage extends Block {
 
         this.setProps({
             error: '',
-            onInput: (): void  => {
-                this.props.validate()
+            onInput: (e: any): void  => {
+                let errorMsg = validateForm([
+                    {type: e.target.name, value: e.target.value},
+                ]) 
+                // @ts-ignore
+                this.refs[e.target.name + 'InputRef'].refs.errorRef.setProps({ text: errorMsg })
             },
             onFocus: (): void => console.log('focus'),
             onSubmit: (): void => {
-                this.props.validate()
-            },
-            validate: (): void => {
                 const loginEl = this.element?.querySelector('input[name="login"]') as HTMLInputElement
                 const passwordEl = this.element?.querySelector('input[name=password]') as HTMLInputElement
+                
                 const loginErrorMsg = validateForm([
                     {type: ValidateType.Login, value: loginEl.value},
                 ]) 
@@ -31,7 +33,7 @@ export class LoginPage extends Block {
                 //@ts-ignore
                 this.refs.passwordInputRef.refs.errorRef.setProps({ text: passwordErrorMsg })
                 
-                if(!this.props.loginErrorMsg && !this.props.passwordErrorMsg) console.log(loginEl.value, passwordEl.value)
+                if(!this.props.loginErrorMsg && !this.props.passwordErrorMsg) console.log({login: loginEl.value, password: passwordEl.value})
             }
         })
     }
@@ -58,7 +60,7 @@ export class LoginPage extends Block {
                             label="Пароль"
                         }}}
                     {{{Button text="Авторизоваться" onClick=onSubmit}}}
-                    <a href="#" class="form__link btn__events">Нет аккаунта?</a>
+                    <a href="/registration" class="form__link btn__events">Нет аккаунта?</a>
                 </section>
             </div>
         `
