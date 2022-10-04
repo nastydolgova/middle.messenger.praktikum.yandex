@@ -14,6 +14,8 @@ import Error from './components/error'
 import ControlledInput from './components/controlledInput'
 import Button from './components/button'
 import AvatarPopUp from './components/avatar-popup'
+import TextArea from './components/textarea'
+import SendButton from './components/send-button'
 
 import { ChatPage } from './pages/сhat/chat'
 import { EditPage } from './pages/edit/edit'
@@ -29,6 +31,7 @@ function registerComponents(){
     registerComponent(ChatItem)
     registerComponent(MsgInfo)
     registerComponent(SendMsg)
+    registerComponent(TextArea)
     registerComponent(UserPopup)
     registerComponent(WrpMsgs)
     registerComponent(Input)
@@ -36,6 +39,7 @@ function registerComponents(){
     registerComponent(ControlledInput)
     registerComponent(Button)
     registerComponent(AvatarPopUp)
+    registerComponent(SendButton)
 }
 
 document.addEventListener("DOMContentLoaded", () => {

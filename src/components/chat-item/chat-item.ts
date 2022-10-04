@@ -2,16 +2,8 @@ import Block from '../../utils/Block'
 
 import './chat-item.css'
 
-// interface ChatItemProps {
-//   text: string
-//   onClick: () => void
-// }
-
 export class ChatItem extends Block {
     static componentName = 'ChatItem'
-//   constructor({text, onClick}: ChatItemProps) {
-//     super({text, events: {click: onClick}})
-//   }
 
     protected render(): string {
         return `

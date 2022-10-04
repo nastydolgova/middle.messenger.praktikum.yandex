@@ -17,6 +17,6 @@ export class Button extends Block {
     protected render(): string {
         return `
             <button class="form__btn btn__events type="button">{{text}}</button>
-        `;
+        `
     }
 }

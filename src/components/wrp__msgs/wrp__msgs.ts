@@ -21,10 +21,6 @@ export class WrpMsgs extends Block {
                     </p>
                     {{{ MsgInfo }}}
                 </div>
-                <div class="msgs__item msgs__item--other msgs__item--img">
-                    <img class="msgs__img" src="" width="316" alt="img">
-                    {{{ MsgInfo }}}
-                </div>
                 <div class="msgs__item msgs__item--my">
                     <p class="msgs__text">Круто!</p>
                     {{{ MsgInfo }}}

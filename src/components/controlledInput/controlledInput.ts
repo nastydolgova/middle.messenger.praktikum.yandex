@@ -21,7 +21,7 @@ export class ControlledInput extends Block {
     constructor(props: ControlledInputProps) {
     super({
             ...props, 
-            onBlur:(e:FocusEvent) => {
+            onBlur:() => {
                 let atr = `input[name="${this.props.name}"]`
                 const inputEl = this.element?.querySelector(atr) as HTMLInputElement
                 const error = validateForm([{type: inputEl.name, value: inputEl.value}])

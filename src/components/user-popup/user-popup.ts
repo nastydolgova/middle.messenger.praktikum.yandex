@@ -2,17 +2,8 @@ import Block from '../../utils/Block'
 
 import './user-popup.css'
 
-// interface UserPopupProps {
-//     text: string;
-//     onClick: () => void;
-// }
-
 export class UserPopup extends Block {
     static componentName = 'UserPopup'
-    
-//   constructor({text, onClick}: UserPopupProps) {
-//     super({text, events: {click: onClick}});
-//   }
 
     protected render(): string {
         return `

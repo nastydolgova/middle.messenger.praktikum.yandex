@@ -2,16 +2,8 @@ import Block from '../../utils/Block'
 
 import './msg-info.css'
 
-// interface MsgInfoProps {
-//   text: string
-//   onClick: () => void
-// }
-
 export class MsgInfo extends Block {
     static componentName = 'MsgInfo'
-//   constructor({text, onClick}: MsgInfoProps) {
-//     super({text, events: {click: onClick}})
-//   }
 
     protected render(): string {
         return `

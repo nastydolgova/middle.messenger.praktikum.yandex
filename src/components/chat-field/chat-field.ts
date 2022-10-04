@@ -2,19 +2,9 @@ import Block from '../../utils/Block'
 
 import './chat-field.css'
 
-// interface ChatFieldProps {
-//     name: string
-//   text: string
-//   onClick: () => void
-// }
-
 export class ChatField extends Block {
     static componentName = 'ChatField'
     
-//   constructor(name: ChatFieldProps) {
-//     super(name)
-//   }
-
     protected render(): string {
         return `
             <section class="chat-field">

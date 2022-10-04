@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "", 
   "scripts": {
-    "start": "parcel build src/pages/index/index.hbs && node ./server.js",
-    "build": "parcel build src/index.html --no-cache --public-url ./",
+    "start": "parcel build src/index.html && node ./server.js",
+    "build": "parcel build src/index.html --no-cache",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel src/index.html --no-cache"
   },

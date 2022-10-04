@@ -6,35 +6,3 @@
     background-color: transparent;
     cursor: pointer;
 }
-
-.sent__field{
-    flex-grow: 1;
-    border: none;
-    resize: none;
-    height: 32px;
-    background: #EFEFEF;
-    border-radius: 30px;
-    margin: 0 5px;
-    font-size: 12px;
-    padding: 0 12px;
-    line-height: 30px;
-    font-family: Segoe UI, Tahoma, Verdana, sans-serif;
-
-}
-
-.sent__field::placeholder {
-    color: #999;
-    font-family: Segoe UI, Tahoma, Verdana, sans-serif;
-}
-
-.sent__field:focus-visible{
-    outline: none;
-}
-
-.sent__button--sent{
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: #3369F3;
-    line-height: 31px;
-}

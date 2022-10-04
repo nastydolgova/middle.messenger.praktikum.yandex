@@ -1,5 +1,4 @@
 import Block from 'utils/Block'
-// import { validateForm, ValidateType } from 'helpers/validateForm';
 
 import './chat.css'
 
