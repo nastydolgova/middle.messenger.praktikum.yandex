@@ -1,0 +1,17 @@
+.form__input{
+    border: none;
+    text-align: right;
+    color: #999;
+    width: 300px;
+    background-color: transparent;
+    flex-grow: 1;
+}
+
+.form__input::placeholder {
+    color: #999;
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+.form__input:focus-visible{
+    outline: none;
+}

@@ -1,0 +1,8 @@
+.sent__button{
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}

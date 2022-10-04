@@ -1,0 +1,96 @@
+.chat__wrp{
+    background-color: #fffafa;
+    height: 100%;
+    flex-grow: 1;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrp__user{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.user__img{
+    background-color: #e5e5e5;
+    border-radius: 50%;
+}
+
+.user__name{
+    padding-left: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 2.5;
+}
+
+.user__button{
+    margin-left: auto;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.wrp__user::after{
+    content: "";
+    position: absolute;
+    width: 929px;
+    height: 1px;
+    background: #EAEAEA;
+    bottom: 0;
+}
+
+.user__popup{
+    background: #FFFFFF;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+    border-radius: 12px;
+    width: 210px;
+    height: 120px;
+    position: absolute;
+    right: 0;
+    top: 60px;
+}
+
+.wrp__msgs{
+    max-height: 600px;
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.wrp__msgs::-webkit-scrollbar {
+    width: 4px;            
+}
+
+.wrp__msgs::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+.wrp__msgs::-webkit-scrollbar-thumb {
+    background-color: #999999; 
+    border-radius: 4px;
+}
+
+.wrp__send{
+    height: 55px;
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    padding-top: 10px;
+}
+
+.wrp__send:before{
+    content: "";
+    position: absolute;
+    width: 929px;
+    height: 1px;
+    background: #EAEAEA;
+    top: 0;
+}
