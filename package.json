@@ -1,14 +1,14 @@
 {
   "name": "chat",
   "version": "1.0.0",
-  "description": "", 
+  "description": "",
   "scripts": {
     "start": "parcel build src/index.html && node ./server.js",
     "build": "parcel build src/index.html --no-cache",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel src/index.html --no-cache"
   },
-  "alias":{
+  "alias": {
     "utils": "./src/utils",
     "component": "./src/component",
     "helpers": "./src/helpers",
@@ -24,6 +24,7 @@
     "@types/node": "18.7.23",
     "@typescript-eslint/eslint-plugin": "5.38.0",
     "@typescript-eslint/parser": "5.38.0",
+    "eslint": "8.24.0",
     "eslint-config-airbnb": "19.0.4",
     "parcel": "2.7.0",
     "postcss": "8.4.16",
