@@ -1,5 +1,5 @@
 import Block from 'utils/Block'
-import { validateForm, ValidateType } from 'helpers/validateForm'
+import { validateForm } from 'helpers/validateForm'
 import { Field } from 'models/FieldModel'
 import Info from 'models/InfoModel'
 

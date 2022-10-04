@@ -17,7 +17,7 @@ import AvatarPopUp from './components/avatar-popup'
 import TextArea from './components/textarea'
 import SendButton from './components/send-button'
 
-import { ChatPage } from './pages/сhat/chat'
+import { ChatPage } from './pages/chat/chat'
 import { EditPage } from './pages/edit/edit'
 import { ErrorPage500 } from './pages/error-page-500/error-page-500'
 import { ErrorPage404 } from './pages/error-page-404/error-page-404'

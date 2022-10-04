@@ -1,19 +1,5 @@
-.button {
-    margin: 10px;
-}
 
-.button__button {
-    background: var(--message-background);
-    border: none;
-    cursor: pointer;
-    color: white;
-    padding: 15px 32px;
-    font-size: 14px;
-    border-radius: 20px;
-    background-color: blue;
-}
-
-.button__button:hover {
+button:hover {
     opacity: 0.8;
 }
 
@@ -21,8 +7,8 @@
     width: 280px;
     height: 37px;
     margin-top: 50px;
-    background: #3369F3;
+    background: var(--color-button);
     border-radius: 8px;
-    color: #fff;
+    color: var(--color-white);
     border: none;
 }

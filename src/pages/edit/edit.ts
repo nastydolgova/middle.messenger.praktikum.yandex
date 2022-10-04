@@ -74,8 +74,8 @@ export class EditPage extends Block {
                 ]) 
                 // @ts-ignore
                 this.refs[e.target.name + 'InputRef'].refs.errorRef.setProps({ text: errorMsg })
-                let field = fields.find((item: Field) => item.name == e.target.name)
-                if(field) field.value = e.target.value
+                let currentInput = fields.find((item: Field) => item.name == e.target.name)
+                if(currentInput) currentInput.value = e.target.value
             },
             onFocus: (): void => console.log('focus'),
             onSubmit: (e: any): void => {

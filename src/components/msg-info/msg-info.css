@@ -1,5 +1,5 @@
 .msgs__item-info--img span{
-    color:#fff;
+    color: var(--color-white);
     display: inline-block;
     padding: 5px;
     background: rgba(82, 82, 82, 0.5);
@@ -7,5 +7,5 @@
 }
 
 .msgs__item--my time{
-    color:#3369F3;
+    color: var(--color-button);
 }

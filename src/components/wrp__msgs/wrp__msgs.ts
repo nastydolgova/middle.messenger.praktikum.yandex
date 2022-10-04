@@ -8,9 +8,9 @@ export class WrpMsgs extends Block {
     protected render(): string {
         return `
             <div class="wrp__msgs">
-                <span class="msgs__date">
+                <time class="msgs__date">
                     19 июня
-                </span>
+                </time>
                 <div class="msgs__item msgs__item--other">
                     <p class="msgs__text">  
                         Привет! Смотри, тут всплыл интересный кусок лунной космической истории — 

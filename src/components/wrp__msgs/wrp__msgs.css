@@ -2,7 +2,7 @@
     display: inline-block;
     width: 100%;
     text-align: center;
-    color: #999;
+    color: var(--color-text-form);
     font-size: 12px;
     margin: 15px 0;
 }
@@ -16,7 +16,7 @@
 } 
 
 .msgs__item--other{
-    background-color: #dedede;
+    background-color: var(--color-border);
     border-radius: 0 10px 10px 10px;
 }
 
@@ -42,5 +42,5 @@
     bottom: 10px;
     right: 20px;
     font-size: 9px;
-    color: #999999;
+    color: var(--color-text-form);
 }

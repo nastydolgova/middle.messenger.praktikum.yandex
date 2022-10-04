@@ -9,7 +9,7 @@ export class ChatItem extends Block {
         return `
             <div class="chats__wrp">
                 <div class="chats__item chat btn__events">
-                    <img class="chat__img" src="#" width="47" height="47" alt="img">
+                    <img class="chat__img" src="#" width="47" height="47" alt="Аватар">
                     <div class="chat__description">
                         <p class="chat__name"> Вася </p>
                         <p class="chat__last-msg">
