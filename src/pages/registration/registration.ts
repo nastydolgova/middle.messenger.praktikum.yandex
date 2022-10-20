@@ -59,9 +59,10 @@ export class RegPage extends Block {
                 let isCorrect = true
                 fields.forEach((item: Field) => {
                     //@ts-ignore
-                    if (this.refs[item.ref].refs.errorRef.props.text != '') isCorrect = false
+                    if (this.refs[item.name + `InputRef`].refs.errorRef.props.text != '') isCorrect = false
                 })
                 if (isCorrect) {
+                    location.href = '/messenger'
                     let info: any[] = []
                     fields.forEach((item: Field) => {
                         if(item.value){
@@ -79,7 +80,7 @@ export class RegPage extends Block {
                         {type: inputEl.name, value: inputEl.value},
                     ]) 
                     //@ts-ignore
-                    this.refs[field.ref].refs.errorRef.setProps({ text: errorMsg })
+                    this.refs[field.name + `InputRef`].refs.errorRef.setProps({ text: errorMsg })
                 })
             }
         })

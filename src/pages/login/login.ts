@@ -33,7 +33,10 @@ export class LoginPage extends Block {
                 //@ts-ignore
                 this.refs.passwordInputRef.refs.errorRef.setProps({ text: passwordErrorMsg })
                 
-                if(!this.props.loginErrorMsg && !this.props.passwordErrorMsg) console.log({login: loginEl.value, password: passwordEl.value})
+                if(!loginErrorMsg && !passwordErrorMsg) {
+                    console.log({login: loginEl.value, password: passwordEl.value})
+                    location.href = '/messenger'
+                }
             }
         })
     }

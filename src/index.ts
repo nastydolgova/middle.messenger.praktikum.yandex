@@ -1,4 +1,4 @@
-import { Block, renderDOM, registerComponent }  from 'core'
+import { registerComponent, Router }  from 'core'
 
 import './styles/style.css'
 
@@ -25,47 +25,30 @@ import { LoginPage } from './pages/login/login'
 import { ProfilePage } from './pages/profile/profile'
 import { RegPage } from './pages/registration/registration'
 
-function registerComponents(){
-    registerComponent(ChatEmpty)
-    registerComponent(ChatField)
-    registerComponent(ChatItem)
-    registerComponent(MsgInfo)
-    registerComponent(SendMsg)
-    registerComponent(TextArea)
-    registerComponent(UserPopup)
-    registerComponent(WrpMsgs)
-    registerComponent(Input)
-    registerComponent(Error)
-    registerComponent(ControlledInput)
-    registerComponent(Button)
-    registerComponent(AvatarPopUp)
-    registerComponent(SendButton)
-}
+registerComponent(ChatEmpty)
+registerComponent(ChatField)
+registerComponent(ChatItem)
+registerComponent(MsgInfo)
+registerComponent(SendMsg)
+registerComponent(TextArea)
+registerComponent(UserPopup)
+registerComponent(WrpMsgs)
+registerComponent(Input)
+registerComponent(Error)
+registerComponent(ControlledInput)
+registerComponent(Button)
+registerComponent(AvatarPopUp)
+registerComponent(SendButton)
 
-document.addEventListener("DOMContentLoaded", () => {
-    registerComponents()
+const router = new Router();
 
-    switch (window.location.pathname){
-        case '/':
-            renderDOM(new ChatPage())
-            break
-        case '/registration':
-            renderDOM(new RegPage())
-            break
-        case '/login':
-            renderDOM(new LoginPage())
-            break
-        case '/edit':
-            renderDOM(new EditPage())
-            break
-        case '/profile':
-            renderDOM(new ProfilePage())
-            break
-        case '/error500':
-            renderDOM(new ErrorPage500())
-            break
-        default:
-            renderDOM(new ErrorPage404())
-            break
-    }
-})
+router
+  .use('/', LoginPage)
+  .use('/login', LoginPage)
+  .use('/settings', EditPage)
+  .use('/messenger', ChatPage)
+  .use('/error404', ErrorPage404)
+  .use('/error500', ErrorPage500)
+  .use('/profile', ProfilePage)
+  .use('/registration', RegPage)
+  .start();

@@ -31,22 +31,22 @@ export default class Block<P = any> {
     protected refs: {[key: string]: Block} = {}
 
     public constructor(props?: P) {
-    const eventBus = new EventBus<Events>()
+        const eventBus = new EventBus<Events>()
 
-    this._meta = {
-        props,
-    }
+        this._meta = {
+            props,
+        }
 
-    this.getStateFromProps(props)
+        this.getStateFromProps(props)
 
-    this.props = this._makePropsProxy(props || {} as P)
-    this.state = this._makePropsProxy(this.state)
+        this.props = this._makePropsProxy(props || {} as P)
+        this.state = this._makePropsProxy(this.state)
 
-    this.eventBus = () => eventBus
+        this.eventBus = () => eventBus
 
-    this._registerEvents(eventBus)
+        this._registerEvents(eventBus)
 
-    eventBus.emit(Block.EVENTS.INIT, this.props)
+        eventBus.emit(Block.EVENTS.INIT, this.props)
     }
 
     private _registerEvents(eventBus: EventBus<Events>) {
@@ -74,6 +74,7 @@ export default class Block<P = any> {
     }
 
     componentDidMount(props: P) {
+        return
     }
 
     private _componentDidUpdate(oldProps: P, newProps: P) {
@@ -210,5 +211,13 @@ export default class Block<P = any> {
         }
     })
         return fragment.content
+    }
+
+    show() {
+        this.getContent().style.display = 'block';
+    }
+    
+    hide() {
+        this.getContent().style.display = 'none';
     }
 }
