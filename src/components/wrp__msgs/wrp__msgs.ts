@@ -1,4 +1,4 @@
-import Block from '../../utils/Block'
+import { Block } from 'core'
 
 import './wrp__msgs.css'
 

@@ -1,4 +1,4 @@
-import { Block, renderDOM, registerComponent }  from './utils'
+import { Block, renderDOM, registerComponent }  from 'core'
 
 import './styles/style.css'
 

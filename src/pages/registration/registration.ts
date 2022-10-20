@@ -1,4 +1,4 @@
-import Block from 'utils/Block'
+import { Block } from 'core'
 import { validateForm } from 'helpers/validateForm'
 import { Field } from 'models/FieldModel'
 import Info from 'models/InfoModel'

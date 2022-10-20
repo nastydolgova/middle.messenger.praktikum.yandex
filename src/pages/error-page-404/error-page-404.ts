@@ -1,4 +1,4 @@
-import Block from 'utils/Block'
+import { Block } from 'core'
 import './error-page-404.css'
 
 export class ErrorPage404 extends Block {

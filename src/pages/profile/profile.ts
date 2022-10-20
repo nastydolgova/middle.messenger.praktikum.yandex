@@ -1,4 +1,4 @@
-import Block from 'utils/Block'
+import { Block } from 'core'
 import { Field } from 'models/FieldModel'
 import './profile.css'
 
