@@ -14,7 +14,9 @@
     "helpers": "./src/helpers",
     "pages": "./src/pages",
     "utils": "./src/utils",
-    "models": "./src/models"
+    "models": "./src/models",
+    "api": "./src/api",
+    "services": "./src/services"
   },
   "keywords": [],
   "author": "",
