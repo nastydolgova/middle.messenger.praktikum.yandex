@@ -1,64 +1,68 @@
-
-
 .profile__change-avatar{
-    border: none;
-    padding: 0;
-    background-color: transparent;
-    cursor: pointer;
-    position: relative;
-    margin-bottom: 20px;
-    width: 130px;
-    height: 130px;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 20px;
+  width: 130px;
+  height: 130px;
 }
 
 .profile__change-avatar span{
-    position: absolute;
-    top: 60px;
-    width: 100%;
-    text-align: center;
-    display: none;
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  text-align: center;
+  display: none;
 }
 
 .profile__change-avatar:hover span{
-    display: inline-block;
-    color: var(--color-white);
-    z-index: 3;
+  display: inline-block;
+  color: var(--color-white);
+  z-index: 3;
 }
 
 .profile__img{
-    background: #EFEFEF;
-    border-radius: 50%;
-    width: 130px;
-    height: 130px;
-    display: inline-block;
+  background: #EFEFEF;
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  display: inline-block;
 }
 
 .profile__change-avatar:hover img{
-    filter: brightness(80%)
+  filter: brightness(80%)
 }
 
 .profile__list{
-    list-style-type: none;
-    padding: 0;
-    width: 510px;
-    margin: 40px 0;
+  list-style-type: none;
+  padding: 0;
+  width: 510px;
+  margin: 40px 0;
 }
 
 .profile__list-item{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--color-border-form);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border-form);
 }
 
 .profile__events{
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile__link--exit{
-    color: var(--color-exit);
-    border-bottom: none;
+  color: var(--color-exit) !important;
+  border-bottom: none;
+}
+
+.profile__link-list{
+  border: none;
+  border-bottom: 1px solid #eaeaea;
+  background: transparent;
 }

@@ -5,5 +5,5 @@ const port = 3000
 app.use('/', express.static('dist'))
 
 app.listen(port, () => {
-  console.log(`Chat listening on port ${port}`)
+    console.log(`Chat listening on port ${port}`)
 })

@@ -1,10 +1,33 @@
 import { Block } from 'core'
-import { validateForm, ValidateType } from 'helpers/validateForm'
+import { validateForm } from 'helpers/validateForm'
 import { Field } from 'models/FieldModel'
 import Info from 'models/InfoModel'
+import { CoreRouter, Store } from 'core'
+import { withUser, withStore, withRouter } from 'utils'
+
 import './edit.css'
 
+type EditPageProps = {
+    router: CoreRouter
+    store: Store<AppState>
+    user: User | null
+    error: string
+    onInput: (e: any) => void
+    onFocus: () => void
+    onSubmit: (e: any) => void
+    validate: () => void
+    back?: () => void
+}
+  
+
 const fields: Field[] = [
+    {
+        ref: '',
+        type: 'file',
+        name: 'avatar',
+        label: 'Аватар',
+        value: '',
+    },
     {
         ref: 'loginInputRef',
         type: 'text',
@@ -62,10 +85,11 @@ const fields: Field[] = [
     }
 ] as Field[]
 
-export class EditPage extends Block {
+export class EditPage extends Block<EditPageProps> {
+    static componentName = 'EditPage'
 
-    constructor(){
-        super()
+    constructor(props: EditPageProps){
+        super(props)
 
         this.setProps({
             onInput: (e: any): void  => {
@@ -113,23 +137,28 @@ export class EditPage extends Block {
                     //@ts-ignore
                     this.refs[field.name+'InputRef'].refs.errorRef.setProps({ text: errorMsg })
                 })
-            }
+            },
+            back: () => this.back()
         })
+    }
+
+    back(){
+        if (this.props.store.getState().user) {
+            this.props.router.go('/profile')
+        } else {
+          this.props.router.go('/login')
+        }
     }
 
     render() {
         return `
             <div class="container">
-                <a href="/profile" class="profile__link--back">
-                    <p class="profile__arrow-back btn__events">
-                        <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="13" y="6.80005" width="11" height="1.6" transform="rotate(-180 13 6.80005)" fill="white"/>
-                            <path d="M6 11L2 6L6 1" stroke="white" stroke-width="1.6"/>
-                        </svg>
-                    </p>
-                </a>
+            <div class="profile__link--back">
+                {{{Button class="profile__arrow-back btn__events" text="Назад" onClick=back}}}
+            </div>
                 <section class="edit">
                     <form>
+                    <p class="file__description">Для изменения аватара загрузите изображение</p>
                     ${(fields.map(item => 
                         `{{{ControlledInput
                             ref="${item.name + `InputRef`}"
@@ -142,10 +171,12 @@ export class EditPage extends Block {
                         }}}
                         `
                     )).join(' ')}
-                    {{{Button text="Сохранить" onClick=onSubmit}}}
+                    {{{Button class="form__btn btn__events" text="Сохранить" onClick=onSubmit}}}
                     </form>
                 </section>
             </div>
         `
     }
 }
+
+export default withRouter(withStore(withUser(EditPage)))

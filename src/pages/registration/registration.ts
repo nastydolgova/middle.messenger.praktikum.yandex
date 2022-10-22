@@ -2,8 +2,22 @@ import { Block } from 'core'
 import { validateForm } from 'helpers/validateForm'
 import { Field } from 'models/FieldModel'
 import Info from 'models/InfoModel'
+import { withUser, withStore, withRouter } from 'utils'
+import { CoreRouter, Store } from 'core'
 
 import './registration.css'
+
+type RegPageProps = {
+    router: CoreRouter
+    store: Store<AppState>
+    user: User | null
+    back?: () => void
+    onInput: (e: any) => void
+    onFocus: () => void
+    onSubmit: (e: any) => void
+    validate: () => void
+    onLog: () => void
+}
 
 const fields: Field[] = [
     {
@@ -38,9 +52,10 @@ const fields: Field[] = [
     },
 ] as Field[]
 
-export class RegPage extends Block {
-    constructor(){
-        super()
+export class RegPage extends Block<RegPageProps> {
+    static componentName = 'RegPage'
+    constructor(props: RegPageProps){
+        super(props)
 
         this.setProps({
             onInput: (e: any): void  => {
@@ -82,6 +97,9 @@ export class RegPage extends Block {
                     //@ts-ignore
                     this.refs[field.name + `InputRef`].refs.errorRef.setProps({ text: errorMsg })
                 })
+            },
+            onLog: (): void => {
+                this.props.router.go('/login');
             }
         })
     }
@@ -89,7 +107,7 @@ export class RegPage extends Block {
     render() {
         return `
             <div class="container">
-                <section class="login__section">
+                <section class="login__section registration">
                     <h1 class="login__title"> Регистрация </h1>
                         ${(fields.map(item => 
                             `{{{ControlledInput
@@ -102,10 +120,12 @@ export class RegPage extends Block {
                             }}}
                             `
                         )).join(' ')}
-                    {{{Button text="Зарегистрироваться" onClick=onSubmit}}}
-                    <a href="/login" class="form__link btn__events">Войти</a>
-                </section>
+                    {{{Button class="form__btn btn__events" text="Зарегистрироваться" onClick=onSubmit}}}
+                    {{{Button class="form__link btn__events" text="Войти" onClick=onLog}}}
+                    </section>
             </div>
         `
     }
 }
+
+export default withRouter(withStore(withUser(RegPage)))

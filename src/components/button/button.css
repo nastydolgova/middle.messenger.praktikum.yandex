@@ -12,3 +12,7 @@ button:hover {
     color: var(--color-white);
     border: none;
 }
+
+button svg{
+    display: none;
+}

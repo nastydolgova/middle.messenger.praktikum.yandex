@@ -1,1 +1,1 @@
-export { RegPage as default } from './registration'
+export { default } from './registration'

@@ -94,3 +94,7 @@
     background: var(--color-border-form);
     top: 0;
 }
+
+button.user__button svg{
+    display: inline-block;
+}

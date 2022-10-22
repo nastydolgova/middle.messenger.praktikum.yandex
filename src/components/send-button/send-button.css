@@ -6,3 +6,7 @@
     background-color: var(--color-button);
     line-height: 31px;
 }
+
+.sent__button svg{
+    display: inline-block;
+}

@@ -1,12 +1,13 @@
 import EventBus from './EventBus'
-import {nanoid} from 'nanoid'
+import { nanoid } from 'nanoid'
 import Handlebars from 'handlebars'
 
-interface BlockMeta<P = any> {
-    props: P
-}
-
 type Events = Values<typeof Block.EVENTS>
+
+export interface BlockClass<P> extends Function {
+    new (props: P): Block<P>
+    componentName?: string
+}
 
 export default class Block<P = any> {
     static EVENTS = {
@@ -21,21 +22,21 @@ export default class Block<P = any> {
 
     protected _element: Nullable<HTMLElement> = null
     protected readonly props: P
-    protected children: {[id: string]: Block} = {}
+    protected children: { [id: string]: Block } = {}
 
     eventBus: () => EventBus<Events>
 
     protected state: any = {}
-    protected refs: {[key: string]: Block} = {}
+    protected refs: { [key: string]: Block } = {}
 
-    static componentName: string
+    public static componentName?: string
 
     public constructor(props?: P) {
         const eventBus = new EventBus<Events>()
 
         this.getStateFromProps(props)
 
-        this.props = this._makePropsProxy(props || {} as P)
+        this.props = this._makePropsProxy(props || ({} as P))
         this.state = this._makePropsProxy(this.state)
 
         this.eventBus = () => eventBus
@@ -45,19 +46,18 @@ export default class Block<P = any> {
         eventBus.emit(Block.EVENTS.INIT, this.props)
     }
 
-    
     _checkInDom() {
-        const elementInDOM = document.body.contains(this._element);
+        const elementInDOM = document.body.contains(this._element)
 
         if (elementInDOM) {
-            setTimeout(() => this._checkInDom(), 1000);
-            return;
+        setTimeout(() => this._checkInDom(), 1000)
+        return
         }
 
-        this.eventBus().emit(Block.EVENTS.FLOW_CWU, this.props);
+        this.eventBus().emit(Block.EVENTS.FLOW_CWU, this.props)
     }
 
-    private _registerEvents(eventBus: EventBus<Events>) {
+    _registerEvents(eventBus: EventBus<Events>) {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this))
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
@@ -65,7 +65,7 @@ export default class Block<P = any> {
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this))
     }
 
-    private _createResources() {
+    _createResources() {
         this._element = this._createDocumentElement('div')
     }
 
@@ -78,24 +78,22 @@ export default class Block<P = any> {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER, this.props)
     }
 
-    private _componentDidMount(props: P) {
-        this._checkInDom();
+    _componentDidMount(props: P) {
+        this._checkInDom()
 
-        this.componentDidMount(props);
+        this.componentDidMount(props)
     }
 
-    componentDidMount(props: P) {
-        return
-    }
+    componentDidMount(props: P) {}
 
     _componentWillUnmount() {
-        this.eventBus().destroy();
-        this.componentWillUnmount();
+        this.eventBus().destroy()
+        this.componentWillUnmount()
     }
 
     componentWillUnmount() {}
 
-    private _componentDidUpdate(oldProps: P, newProps: P) {
+    _componentDidUpdate(oldProps: P, newProps: P) {
         const response = this.componentDidUpdate(oldProps, newProps)
         if (!response) {
             return
@@ -107,7 +105,7 @@ export default class Block<P = any> {
         return true
     }
 
-    setProps = (nextProps: P) => {
+    setProps = (nextProps: Partial<P>) => {
         if (!nextProps) {
             return
         }
@@ -127,7 +125,7 @@ export default class Block<P = any> {
         return this._element
     }
 
-    private _render() {
+    _render() {
         const fragment = this._compile()
 
         this._removeEvents()
@@ -145,54 +143,55 @@ export default class Block<P = any> {
 
     getContent(): HTMLElement {
         if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-            setTimeout(() => {
-                if (this.element?.parentNode?.nodeType !==  Node.DOCUMENT_FRAGMENT_NODE ) {
-                this.eventBus().emit(Block.EVENTS.FLOW_CDM)
-                }
-            }, 100)
+        setTimeout(() => {
+            if (
+            this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE
+            ) {
+            this.eventBus().emit(Block.EVENTS.FLOW_CDM)
+            }
+        }, 100)
         }
 
         return this.element!
     }
 
-    private _makePropsProxy(props: any): any {
+    _makePropsProxy(props: any): any {
         const self = this
 
         return new Proxy(props as unknown as object, {
-            get(target: Record<string, unknown>, prop: string) {
-                const value = target[prop]
-                return typeof value === 'function' ? value.bind(target) : value
-            },
-            set(target: Record<string, unknown>, prop: string, value: unknown) {
-                target[prop] = value
+        get(target: Record<string, unknown>, prop: string) {
+            const value = target[prop]
+            return typeof value === 'function' ? value.bind(target) : value
+        },
+        set(target: Record<string, unknown>, prop: string, value: unknown) {
+            target[prop] = value
 
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target)
-                return true
-            },
-            deleteProperty() {
-                throw new Error('Нет доступа')
-            },
-            }) as unknown as P
+            self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target)
+            return true
+        },
+        deleteProperty() {
+            throw new Error('Нет доступа')
+        },
+        }) as unknown as P
     }
 
-    private _createDocumentElement(tagName: string) {
+    _createDocumentElement(tagName: string) {
         return document.createElement(tagName)
     }
 
-    private _removeEvents() {
+    _removeEvents() {
         const events: Record<string, () => void> = (this.props as any).events
 
         if (!events || !this._element) {
             return
         }
 
-
         Object.entries(events).forEach(([event, listener]) => {
             this._element!.removeEventListener(event, listener)
         })
     }
 
-    private _addEvents() {
+    _addEvents() {
         const events: Record<string, () => void> = (this.props as any).events
 
         if (!events) {
@@ -200,42 +199,41 @@ export default class Block<P = any> {
         }
 
         Object.entries(events).forEach(([event, listener]) => {
-            this._element!.addEventListener(event, listener)
+        this._element!.addEventListener(event, listener)
         })
     }
 
-    private _compile(): DocumentFragment {
+    _compile(): DocumentFragment {
         const fragment = document.createElement('template')
 
         const template = Handlebars.compile(this.render())
-        fragment.innerHTML = template({ ...this.state, ...this.props, children: this.children, refs: this.refs })
+        fragment.innerHTML = template({
+            ...this.state,
+            ...this.props,
+            children: this.children,
+            refs: this.refs,
+        })
 
         Object.entries(this.children).forEach(([id, component]) => {
-        const stub = fragment.content.querySelector(`[data-id="${id}"]`)
 
-        if (!stub) {
-            return
-        }
+            const stub = fragment.content.querySelector(`[data-id="${id}"]`)
 
-        const stubChilds = stub.childNodes.length ? stub.childNodes : []
+            if (!stub) {
+                return
+            }
 
-        const content = component.getContent()
-        stub.replaceWith(content)
+            const stubChilds = stub.childNodes.length ? stub.childNodes : []
 
-        const layoutContent = content.querySelector('[data-layout="1"]')
+            const content = component.getContent()
+            stub.replaceWith(content)
 
-        if (layoutContent && stubChilds.length) {
-            layoutContent.append(...stubChilds)
-        }
-    })
+            const layoutContent = content.querySelector('[data-layout="1"]')
+
+            if (layoutContent && stubChilds.length) {
+                layoutContent.append(...stubChilds)
+            }
+        })
+
         return fragment.content
-    }
-
-    show() {
-        this.getContent().style.display = 'block';
-    }
-    
-    hide() {
-        this.getContent().style.display = 'none';
     }
 }

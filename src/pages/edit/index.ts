@@ -1,1 +1,1 @@
-export { EditPage as default } from './edit'
+export {  default } from './edit'
