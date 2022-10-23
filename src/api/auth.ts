@@ -1,18 +1,14 @@
-import { request } from 'core/apiRequest'
-import { APIError, UserDTO } from './types'
+import { HTTP } from 'core/HTTP'
 
 type LoginRequestData = {
     login: string
     password: string
 }
 
-type LoginResponseData = {} | APIError
-
 export const authAPI = {
-    login: (data: LoginRequestData) =>
-        request.post<LoginResponseData>('auth/signin', data),
+    login: (data: LoginRequestData) => HTTP.post('auth/signin', {data}),
 
-    me: () => request.get<UserDTO | APIError>('auth/user'),
+    me: () => HTTP.get('auth/user'),
 
-    logout: () => request.post('auth/logout'),
+    logout: () => HTTP.post('auth/logout'),
 }
