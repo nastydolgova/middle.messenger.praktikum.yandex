@@ -11,6 +11,7 @@ declare global {
         screen: Screens | null
         isLoading: boolean
         loginFormError: string | null
+        registrationFormError: string | null
         user: User | null
     }
 

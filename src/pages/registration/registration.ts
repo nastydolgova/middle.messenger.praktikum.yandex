@@ -4,6 +4,7 @@ import { Field } from 'models/FieldModel'
 import Info from 'models/InfoModel'
 import { withUser, withStore, withRouter } from 'utils'
 import { CoreRouter, Store } from 'core'
+import { signup } from 'services/auth'
 
 import './registration.css'
 
@@ -69,6 +70,7 @@ export class RegPage extends Block<RegPageProps> {
             },
             onFocus: (): void => console.log('focus'),
             onSubmit: (e: any): void => {
+                console.log('!')
                 e.preventDefault()
                 this.props.validate()
                 let isCorrect = true
@@ -77,14 +79,15 @@ export class RegPage extends Block<RegPageProps> {
                     if (this.refs[item.name + `InputRef`].refs.errorRef.props.text != '') isCorrect = false
                 })
                 if (isCorrect) {
-                    location.href = '/messenger'
                     let info: any[] = []
                     fields.forEach((item: Field) => {
                         if(item.value){
                             info.push([item.name , item.value])
                         }
                     })
-                    console.log(Object.fromEntries(info) as Info)
+                    debugger
+                    this.props.store.dispatch(signup, Object.fromEntries(info) as Info)
+                    debugger
                 }
             },
             validate: (): void => {

@@ -37,6 +37,8 @@ export class HTTP {
             url = this.baseUrl + url
             xhr.open(method, url)
 
+            xhr.withCredentials = true
+            
             let headers = { 'Content-Type': 'application/json' }
 
             Object.entries(headers).forEach(([key, value]) => {
