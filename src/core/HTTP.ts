@@ -50,7 +50,7 @@ export class HTTP {
 
             let response = xhr.response;
 
-            const responseHeaders: Record<string, string> = {};
+            const responseHeaders: any = {};
                 xhr
                     .getAllResponseHeaders()
                     .trim()
@@ -79,7 +79,7 @@ export class HTTP {
 
         if (method === METHODS.GET || !data) {
             xhr.send();
-        } else if (data instanceof FormData) {
+        } else if (data) {
             xhr.send(data);
         } else {
             xhr.send(JSON.stringify(data));
