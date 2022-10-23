@@ -1,4 +1,4 @@
-import { renderDOM, registerComponent, PathRouter, CoreRouter, Store } from 'core'
+import { registerComponent, PathRouter, CoreRouter, Store } from 'core'
 import { initApp } from './services/initApp'
 import { defaultState } from './store'
 import { initRouter } from './router'
