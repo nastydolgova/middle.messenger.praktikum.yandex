@@ -8,7 +8,6 @@ import './login.css'
 type LoginPageProps = {
     router: CoreRouter
     store: Store<AppState>
-    formError?: () => string | null
     onLogin: () => void
     error: string
     onInput: (e: any) => void
@@ -24,7 +23,6 @@ export class LoginPage extends Block<LoginPageProps> {
         super(props)
 
         this.setProps({
-            formError: () => this.props.store.getState().loginFormError,
             error: '',
             onInput: (e: any): void  => {
                 let errorMsg = validateForm([

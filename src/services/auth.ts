@@ -25,22 +25,25 @@ export const login = async (
     dispatch({ isLoading: true })
 
     const response = await authAPI.login(action)
-
+        //@ts-ignore
     if (apiHasError(response)) {
-        dispatch({ isLoading: false, loginFormError: response.reason })
+        //@ts-ignore
+        dispatch({ isLoading: false })
+        window.router.go('/login')
         return
     }
 
     const responseUser = await authAPI.me()
 
-    dispatch({ isLoading: false, loginFormError: null })
-
+    dispatch({ isLoading: false })
+    //@ts-ignore
     if (apiHasError(response)) {
         dispatch(logout)
         return
     }
 
-    dispatch({ user: transformUser(responseUser as UserDTO) })
+    //@ts-ignore
+    dispatch({ user: responseUser.response  as UserDTO})
 
     window.router.go('/chat')
 }
@@ -65,13 +68,13 @@ export const signup = async (
     const response = await authAPI.signup(action)
 
     if (apiHasError(response)) {
-        dispatch({ isLoading: false, registrationFormError: response.reason })
+        dispatch({ isLoading: false })
         return
     }
 
     const responseUser = await authAPI.me()
 
-    dispatch({ isLoading: false, loginFormError: null })
+    dispatch({ isLoading: false })
 
     if (apiHasError(response)) {
         dispatch(logout)

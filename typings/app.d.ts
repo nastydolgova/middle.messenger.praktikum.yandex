@@ -10,17 +10,15 @@ declare global {
         appIsInited: boolean
         screen: Screens | null
         isLoading: boolean
-        loginFormError: string | null
-        registrationFormError: string | null
         user: User | null
     }
 
     export type User = {
         id: number
         login: string
-        firstName: string
-        secondName: string
-        displayName: string
+        first_name: string
+        second_name: string
+        display_name: string
         avatar: string
         phone: string
         email: string

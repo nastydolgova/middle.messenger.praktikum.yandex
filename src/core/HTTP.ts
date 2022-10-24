@@ -17,7 +17,7 @@ export class HTTP {
     }
 
     static post(url: string, options = {}){
-        return this.request(url, {...options, method: METHODS.POST})
+        return this.request(url, {...options, method: METHODS.POST}) 
     }
 
     static delete(url: string, options = {}){
@@ -39,7 +39,9 @@ export class HTTP {
 
             xhr.withCredentials = true
             
-            let headers = { 'Content-Type': 'application/json' }
+            let headers = { 
+                'Content-Type': 'application/json'
+            }
 
             Object.entries(headers).forEach(([key, value]) => {
                 xhr.setRequestHeader(key, value);

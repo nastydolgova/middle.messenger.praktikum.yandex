@@ -1,9 +1,9 @@
 import { Block } from 'core'
 import { validateForm } from 'helpers/validateForm'
 import { Field } from 'models/FieldModel'
-import Info from 'models/InfoModel'
 import { CoreRouter, Store } from 'core'
 import { withUser, withStore, withRouter } from 'utils'
+import { setAvatar } from 'services/profile'
 
 import './edit.css'
 
@@ -104,40 +104,42 @@ export class EditPage extends Block<EditPageProps> {
             onFocus: (): void => console.log('focus'),
             onSubmit: (e: any): void => {
                 e.preventDefault()
-                this.props.validate()
-                let isCorrect = true
-                fields.forEach((item: Field) => {
-                    //@ts-ignore
-                    if (this.refs[item.name+'InputRef'].refs.errorRef.props.text != '') isCorrect = false
-                })
-                if (isCorrect) {
-                    let info: any[] = []
-                    fields.forEach((item: Field) => {
-                        if(item.value){
-                            info.push([item.name , item.value])
-                        }
-                    })
-                    console.log(Object.fromEntries(info) as Info)
-                }
+                // this.props.validate()
+                // let isCorrect = true
+                // fields.forEach((item: Field) => {
+                //     //@ts-ignore
+                //     if (this.refs[item.name+'InputRef'].refs.errorRef.props.text != '') isCorrect = false
+                // })
+                // if (isCorrect) {
+                //     let info: any[] = []
+                //     fields.forEach((item: Field) => {
+                //         if(item.value){
+                //             info.push([item.name , item.value])
+                //         }
+                //     })
+                //     console.log(Object.fromEntries(info) as Info)
+                // }
+                let ava = this.element?.querySelector('input[type="file"]') as HTMLInputElement
+                if(ava.value) this.props.store.dispatch(setAvatar, ava.value)
             },
-            validate: (): void => {
-                fields.forEach((field: Field) => {
-                    let atr = `input[name="${field.name}"]`
-                    let inputEl = this.element?.querySelector(atr) as HTMLInputElement
-                    let errorMsg = ''
-                    if( inputEl.name == 'newPassword' || inputEl.name == 'oldPassword'){
-                        errorMsg = validateForm([
-                            {type: 'password', value: inputEl.value},
-                        ]) 
-                    } else {
-                        errorMsg = validateForm([
-                            {type: inputEl.name, value: inputEl.value},
-                        ]) 
-                    }
-                    //@ts-ignore
-                    this.refs[field.name+'InputRef'].refs.errorRef.setProps({ text: errorMsg })
-                })
-            },
+            // validate: (): void => {
+            //     fields.forEach((field: Field) => {
+            //         let atr = `input[name="${field.name}"]`
+            //         let inputEl = this.element?.querySelector(atr) as HTMLInputElement
+            //         let errorMsg = ''
+            //         if( inputEl.name == 'newPassword' || inputEl.name == 'oldPassword'){
+            //             errorMsg = validateForm([
+            //                 {type: 'password', value: inputEl.value},
+            //             ]) 
+            //         } else {
+            //             errorMsg = validateForm([
+            //                 {type: inputEl.name, value: inputEl.value},
+            //             ]) 
+            //         }
+            //         //@ts-ignore
+            //         this.refs[field.name+'InputRef'].refs.errorRef.setProps({ text: errorMsg })
+            //     })
+            // },
             back: () => this.back()
         })
     }
@@ -159,18 +161,12 @@ export class EditPage extends Block<EditPageProps> {
                 <section class="edit">
                     <form>
                     <p class="file__description">Для изменения аватара загрузите изображение</p>
-                    ${(fields.map(item => 
-                        `{{{ControlledInput
-                            ref="${item.name + `InputRef`}"
-                            type="${item.type}"
-                            name="${item.name}"
-                            label="${item.label}"
-                            value="${item.value}"
-                            onInput=onInput
-                            onFocus=onFocus
-                        }}}
-                        `
-                    )).join(' ')}
+                    {{{ControlledInput
+                        ref="avatarInputRef"
+                        type="file"
+                        name="avatar"
+                        label="Аватар"
+                    }}}
                     {{{Button class="form__btn btn__events" text="Сохранить" onClick=onSubmit}}}
                     </form>
                 </section>
@@ -180,3 +176,51 @@ export class EditPage extends Block<EditPageProps> {
 }
 
 export default withRouter(withStore(withUser(EditPage)))
+
+
+// {{{ControlledInput
+//     ref="emailInputRef"
+//     readonly="readonly"
+//     type="email"
+//     name="email"
+//     label="Почта"
+//     value="${this.props.user!.email}"
+// }}}
+// {{{ControlledInput
+//     ref="first_nameInputRef"
+//     readonly="readonly"
+//     type="text"
+//     name="first_name"
+//     label="Имя"
+//     value="${this.props.user!.first_name}"
+// }}}
+// {{{ControlledInput
+//     ref="second_nameInputRef"
+//     readonly="readonly"
+//     type="text"
+//     name="second_name"
+//     label="Фамилия"
+//     value="${this.props.user!.second_name}"
+// }}}
+// {{{ControlledInput
+//     ref="phoneInputRef"
+//     readonly="readonly"
+//     type="phone"
+//     name="phone"
+//     label="Телефон"
+//     value="${this.props.user!.phone}"
+// }}}
+
+
+// ${(fields.map(item => 
+//     `{{{ControlledInput
+//         ref="${item.name + `InputRef`}"
+//         type="${item.type}"
+//         name="${item.name}"
+//         label="${item.label}"
+//         value="${item.value}"
+//         onInput=onInput
+//         onFocus=onFocus
+//     }}}
+//     `
+// )).join(' ')}
