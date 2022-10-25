@@ -104,42 +104,46 @@ export class EditPage extends Block<EditPageProps> {
             onFocus: (): void => console.log('focus'),
             onSubmit: (e: any): void => {
                 e.preventDefault()
-                // this.props.validate()
-                // let isCorrect = true
-                // fields.forEach((item: Field) => {
-                //     //@ts-ignore
-                //     if (this.refs[item.name+'InputRef'].refs.errorRef.props.text != '') isCorrect = false
-                // })
-                // if (isCorrect) {
-                //     let info: any[] = []
-                //     fields.forEach((item: Field) => {
-                //         if(item.value){
-                //             info.push([item.name , item.value])
-                //         }
-                //     })
-                //     console.log(Object.fromEntries(info) as Info)
-                // }
-                let ava = this.element?.querySelector('input[type="file"]') as HTMLInputElement
-                if(ava.value) this.props.store.dispatch(setAvatar, ava.value)
+                const avatar = document.getElementById("avatar") as HTMLInputElement;
+                const formData: any = new FormData();
+                if (avatar.files && avatar!.files[0]) {
+                    formData.append("avatar", avatar!.files[0]);
+                    this.props.store.dispatch(setAvatar, formData);
+                }
+                this.props.validate()
+                let isCorrect = true
+                fields.forEach((item: Field) => {
+                    //@ts-ignore
+                    if (this.refs[item.name+'InputRef'].refs.errorRef.props.text != '') isCorrect = false
+                })
+                if (isCorrect) {
+                    let info: any[] = []
+                    fields.forEach((item: Field) => {
+                        if(item.value){
+                            info.push([item.name , item.value])
+                        }
+                    })
+                    console.log(Object.fromEntries(info))
+                }
             },
-            // validate: (): void => {
-            //     fields.forEach((field: Field) => {
-            //         let atr = `input[name="${field.name}"]`
-            //         let inputEl = this.element?.querySelector(atr) as HTMLInputElement
-            //         let errorMsg = ''
-            //         if( inputEl.name == 'newPassword' || inputEl.name == 'oldPassword'){
-            //             errorMsg = validateForm([
-            //                 {type: 'password', value: inputEl.value},
-            //             ]) 
-            //         } else {
-            //             errorMsg = validateForm([
-            //                 {type: inputEl.name, value: inputEl.value},
-            //             ]) 
-            //         }
-            //         //@ts-ignore
-            //         this.refs[field.name+'InputRef'].refs.errorRef.setProps({ text: errorMsg })
-            //     })
-            // },
+            validate: (): void => {
+                fields.forEach((field: Field) => {
+                    let atr = `input[name="${field.name}"]`
+                    let inputEl = this.element?.querySelector(atr) as HTMLInputElement
+                    let errorMsg = ''
+                    if( inputEl.name == 'newPassword' || inputEl.name == 'oldPassword'){
+                        errorMsg = validateForm([
+                            {type: 'password', value: inputEl.value},
+                        ]) 
+                    } else {
+                        errorMsg = validateForm([
+                            {type: inputEl.name, value: inputEl.value},
+                        ]) 
+                    }
+                    //@ts-ignore
+                    this.refs[field.name+'InputRef'].refs.errorRef.setProps({ text: errorMsg })
+                })
+            },
             back: () => this.back()
         })
     }
@@ -148,7 +152,7 @@ export class EditPage extends Block<EditPageProps> {
         if (this.props.store.getState().user) {
             this.props.router.go('/profile')
         } else {
-          this.props.router.go('/login')
+            this.props.router.go('/login')
         }
     }
 
@@ -161,12 +165,10 @@ export class EditPage extends Block<EditPageProps> {
                 <section class="edit">
                     <form>
                     <p class="file__description">Для изменения аватара загрузите изображение</p>
-                    {{{ControlledInput
-                        ref="avatarInputRef"
-                        type="file"
-                        name="avatar"
-                        label="Аватар"
-                    }}}
+                    <label class="file__label">
+                        <img src="${`https://ya-praktikum.tech/api/v2/resources` + this.props.user!.avatar}" width="50" height="50" alt="Аватар">
+                        <input type="file" name="avatar" id="avatar" accept="image/*,image/jpeg">
+                    </label>
                     {{{Button class="form__btn btn__events" text="Сохранить" onClick=onSubmit}}}
                     </form>
                 </section>
@@ -177,7 +179,12 @@ export class EditPage extends Block<EditPageProps> {
 
 export default withRouter(withStore(withUser(EditPage)))
 
-
+// {{{ControlledInput
+//     ref="avatarInputRef"
+//     type="file"
+//     name="avatar"
+//     label="Аватар"
+// }}}
 // {{{ControlledInput
 //     ref="emailInputRef"
 //     readonly="readonly"

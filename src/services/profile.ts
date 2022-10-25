@@ -3,7 +3,7 @@ import { authAPI } from 'api/auth'
 
 import { UserDTO } from 'api/types'
 import type { Dispatch } from 'core'
-import { transformUser, apiHasError } from 'utils'
+import { apiHasError } from 'utils'
 
 export const setAvatar = async (
     dispatch: Dispatch<AppState>,

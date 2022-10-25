@@ -9,3 +9,11 @@
     flex-grow: 0;
     width: 220px;
 }
+
+.file__label{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 510px;
+}
