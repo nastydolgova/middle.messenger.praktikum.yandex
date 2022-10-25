@@ -30,17 +30,21 @@ export class ChatPage extends Block<ChatPageProps> {
     }
 
     render() {
-        return `
-            <div class="container">
-                <section class="chat-list">
-                <div class="chat__info">
-                {{{Button class="chat-list__link chat__link btn__events" text="Профиль" onClick=onNavigateNext}}}
+        if(!this.props.user!.login){
+            return `Авторизауйтесь для просмотра`
+        } else {
+            return `
+                <div class="container">
+                    <section class="chat-list">
+                    <div class="chat__info">
+                    {{{Button class="chat-list__link chat__link btn__events" text="Профиль" onClick=onNavigateNext}}}
+                    </div>
+                    {{{ ChatItem }}}
+                    </section> 
+                    {{{ ChatField }}}
                 </div>
-                {{{ ChatItem }}}
-                </section> 
-                {{{ ChatField }}}
-            </div>
-        `
+            `
+        }
     }
 }
 

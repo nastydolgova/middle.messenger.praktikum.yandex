@@ -16,4 +16,22 @@
     justify-content: space-between;
     align-items: center;
     width: 510px;
+    padding: 10px;
+}
+
+.edit .form__btn{
+    margin-top: 10px;
+    width: 500px;
+    height: 25px;
+    border-top: 1px solid var(--color-button);
+    background: transparent;
+    color: var(--color-button);
+    font-size: 12px;
+    letter-spacing: 5px;
+    border-bottom: 1px solid var(--color-button);
+    border-radius: 0px;
+}
+
+.edit form{
+    margin-bottom: 10px;
 }

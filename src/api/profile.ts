@@ -1,6 +1,6 @@
 import { HTTP } from 'core/HTTP'
 
-type PasswordPayload = {
+export type PasswordPayload = {
     oldPassword: string;
     newPassword: string;
 }

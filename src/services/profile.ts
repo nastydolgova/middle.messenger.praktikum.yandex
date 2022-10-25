@@ -1,4 +1,4 @@
-import { profileAPI } from 'api/profile'
+import { profileAPI, UserData, PasswordPayload } from 'api/profile'
 import { authAPI } from 'api/auth'
 
 import { UserDTO } from 'api/types'
@@ -31,3 +31,33 @@ export const setAvatar = async (
     //@ts-ignore
     dispatch({ user: responseUser.response  as UserDTO})
 }
+
+export const sendProfile = async (
+    dispatch: Dispatch<AppState>,
+    state: AppState,
+    action: UserData,
+) => {
+    dispatch({ isLoading: true })
+    const response = await profileAPI.sendProfile(action)
+        //@ts-ignore
+        if (apiHasError(response)) {
+            //@ts-ignore
+            dispatch({ isLoading: false })
+            return
+        }
+    }
+
+export const changePassword = async (
+    dispatch: Dispatch<AppState>,
+    state: AppState,
+    action: PasswordPayload,
+) => {
+    dispatch({ isLoading: true })
+    const response = await profileAPI.changePassword(action)
+        //@ts-ignore
+        if (apiHasError(response)) {
+            //@ts-ignore
+            dispatch({ isLoading: false })
+            return
+        }
+    }

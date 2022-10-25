@@ -3,7 +3,8 @@ import { validateForm } from 'helpers/validateForm'
 import { Field } from 'models/FieldModel'
 import { CoreRouter, Store } from 'core'
 import { withUser, withStore, withRouter } from 'utils'
-import { setAvatar } from 'services/profile'
+import { setAvatar, sendProfile, changePassword } from 'services/profile'
+import { me } from 'services/auth'
 
 import './edit.css'
 
@@ -17,71 +18,64 @@ type EditPageProps = {
     onSubmit: (e: any) => void
     validate: () => void
     back?: () => void
+    setAvatar: (e: any) => void
 }
-  
 
 const fields: Field[] = [
-    {
-        ref: '',
-        type: 'file',
-        name: 'avatar',
-        label: 'Аватар',
-        value: '',
-    },
     {
         ref: 'loginInputRef',
         type: 'text',
         name: 'login',
         label: 'Имя пользователя',
-        value: 'Ivanov',
+        value: '',
     },
     {
         ref: 'emailInputRef',
         type: 'email',
         name: 'email',
         label: 'Почта',
-        value: 'Iv@ya.ru'
+        value: ''
     },
     {
         ref: 'first_nameInputRef',
         type: 'text',
         name: 'first_name',
         label: 'Имя',
-        value: 'Ivan'
+        value: ''
     },
     {
         ref: 'second_nameInputRef',
         type: 'text',
         name: 'second_name',
         label: 'Фамилия',
-        value: 'Ivanov'
+        value: ''
     },
     {
         ref: 'phoneInputRef',
         type: 'phone',
         name: 'phone',
         label: 'Телефон',
-        value: '+7999999999'
+        value: ''
     },
     {   
         type: 'text',
         label: 'Имя в приложении',
         name: 'display_name',
-        value: 'IIVAN'
+        value: ''
     },
     {   
         ref: 'passwordInputRef',
         type: 'password',
         label: 'Старый пароль',
         name: 'oldPassword',
-        value: '1234567Q'
+        value: ''
     },
     {   
         ref: 'passwordInputRef',
         type: 'password',
         label: 'Новый пароль',
         name: 'newPassword',
-        value: '1234567Q'
+        value: ''
     }
 ] as Field[]
 
@@ -104,12 +98,6 @@ export class EditPage extends Block<EditPageProps> {
             onFocus: (): void => console.log('focus'),
             onSubmit: (e: any): void => {
                 e.preventDefault()
-                const avatar = document.getElementById("avatar") as HTMLInputElement;
-                const formData: any = new FormData();
-                if (avatar.files && avatar!.files[0]) {
-                    formData.append("avatar", avatar!.files[0]);
-                    this.props.store.dispatch(setAvatar, formData);
-                }
                 this.props.validate()
                 let isCorrect = true
                 fields.forEach((item: Field) => {
@@ -119,11 +107,28 @@ export class EditPage extends Block<EditPageProps> {
                 if (isCorrect) {
                     let info: any[] = []
                     fields.forEach((item: Field) => {
-                        if(item.value){
+                        if(item.value && item.name != 'newPassword' && item.name != 'oldPassword'){
                             info.push([item.name , item.value])
                         }
                     })
-                    console.log(Object.fromEntries(info))
+                    this.props.store.dispatch(sendProfile, Object.fromEntries(info));
+                    let passwords: any[] = []
+                    fields.forEach((item: Field) => {
+                        if(item.name == 'newPassword' || item.name == 'oldPassword'){
+                            passwords.push([item.name , item.value])
+                        }
+                    })
+                    this.props.store.dispatch(changePassword, Object.fromEntries(passwords));
+                    this.props.store.dispatch(me);
+                }
+            },
+            setAvatar: (e: any): void => {
+                e.preventDefault()
+                const avatar = document.getElementById("avatar") as HTMLInputElement;
+                const formData: any = new FormData();
+                if (avatar.files && avatar!.files[0]) {
+                    formData.append("avatar", avatar!.files[0]);
+                    this.props.store.dispatch(setAvatar, formData);
                 }
             },
             validate: (): void => {
@@ -157,6 +162,13 @@ export class EditPage extends Block<EditPageProps> {
     }
 
     render() {
+        fields.map(item => {
+            //@ts-ignore
+            if(this.props.user[item.name]){
+                //@ts-ignore
+                item.value = this.props.user[item.name]
+            }
+        })
         return `
             <div class="container">
             <div class="profile__link--back">
@@ -164,12 +176,27 @@ export class EditPage extends Block<EditPageProps> {
             </div>
                 <section class="edit">
                     <form>
-                    <p class="file__description">Для изменения аватара загрузите изображение</p>
-                    <label class="file__label">
-                        <img src="${`https://ya-praktikum.tech/api/v2/resources` + this.props.user!.avatar}" width="50" height="50" alt="Аватар">
-                        <input type="file" name="avatar" id="avatar" accept="image/*,image/jpeg">
-                    </label>
-                    {{{Button class="form__btn btn__events" text="Сохранить" onClick=onSubmit}}}
+                        <p class="file__description">Для изменения аватара загрузите изображение</p>
+                        <label class="file__label">
+                            <img src="${`https://ya-praktikum.tech/api/v2/resources` + this.props.user!.avatar}" width="50" height="50" alt="Аватар">
+                            <input type="file" name="avatar" id="avatar" accept="image/*,image/jpeg">
+                        </label>
+                        {{{Button class="form__btn btn__events" text="Сохранить изображение" onClick=setAvatar}}}
+                    </form>
+                    <form>
+                    ${(fields.map(item => 
+                        `{{{ControlledInput
+                            ref="${item.name + `InputRef`}"
+                            type="${item.type}"
+                            name="${item.name}"
+                            label="${item.label}"
+                            value="${item.value}"
+                            onInput=onInput
+                            onFocus=onFocus
+                        }}}
+                        `
+                    )).join(' ')}
+                        {{{Button class="form__btn btn__events" text="Изменить" onClick=onSubmit}}}
                     </form>
                 </section>
             </div>
@@ -178,56 +205,3 @@ export class EditPage extends Block<EditPageProps> {
 }
 
 export default withRouter(withStore(withUser(EditPage)))
-
-// {{{ControlledInput
-//     ref="avatarInputRef"
-//     type="file"
-//     name="avatar"
-//     label="Аватар"
-// }}}
-// {{{ControlledInput
-//     ref="emailInputRef"
-//     readonly="readonly"
-//     type="email"
-//     name="email"
-//     label="Почта"
-//     value="${this.props.user!.email}"
-// }}}
-// {{{ControlledInput
-//     ref="first_nameInputRef"
-//     readonly="readonly"
-//     type="text"
-//     name="first_name"
-//     label="Имя"
-//     value="${this.props.user!.first_name}"
-// }}}
-// {{{ControlledInput
-//     ref="second_nameInputRef"
-//     readonly="readonly"
-//     type="text"
-//     name="second_name"
-//     label="Фамилия"
-//     value="${this.props.user!.second_name}"
-// }}}
-// {{{ControlledInput
-//     ref="phoneInputRef"
-//     readonly="readonly"
-//     type="phone"
-//     name="phone"
-//     label="Телефон"
-//     value="${this.props.user!.phone}"
-// }}}
-
-
-// ${(fields.map(item => 
-//     `{{{ControlledInput
-//         ref="${item.name + `InputRef`}"
-//         type="${item.type}"
-//         name="${item.name}"
-//         label="${item.label}"
-//         value="${item.value}"
-//         onInput=onInput
-//         onFocus=onFocus
-//     }}}
-//     `
-// )).join(' ')}
