@@ -8,24 +8,26 @@ const METHODS = {
 export class HTTP {
     public static baseUrl = 'https://ya-praktikum.tech/api/v2/';
 
-    static get(url: string, data?: any){
-        return this.request(url, METHODS.GET, data)
+    static get(url: string, options = {}){
+        return this.request(url, {...options, method: METHODS.GET})
     }
 
-    static put(url: string, data: any){
-        return this.request(url, METHODS.PUT, data)
+    static put(url: string, options: any){
+        return this.request(url, {...options, method: METHODS.PUT})
     }
 
-    static post(url: string,  data?: any){
-        return this.request(url, METHODS.POST, data) 
+    static post(url: string, options = {}){
+        return this.request(url, {...options, method: METHODS.POST}) 
     }
 
-    static delete(url: string, data: any){
-        return this.request(url, METHODS.DELETE, data)
+    static delete(url: string, options = {}){
+        return this.request(url, {...options, method: METHODS.DELETE})
     }
 
-    static request(url: string, method: string, data?: any,){
+    static request(url: string, options: { method: any, data?: any }){
         
+        const {method, data} = options
+
         return new Promise((resolve, reject) => {
 
             let xhrTimeout: number | undefined;
@@ -37,7 +39,7 @@ export class HTTP {
             xhr.open(method, url)
 
             xhr.withCredentials = true
-
+            
             if(!(data instanceof FormData)){
                 let headers = { 
                     'Content-Type': 'application/json'
@@ -82,13 +84,13 @@ export class HTTP {
         xhr.onerror = reject;
         xhr.ontimeout = reject;
 
-            if (method === METHODS.GET || !data) {
-                xhr.send();
-            } else if (data instanceof FormData) {
-                    xhr.send(data);
-            } else {
-                xhr.send(JSON.stringify(data));
-            }
+        if (method === METHODS.GET || !data) {
+            xhr.send();
+        } else if (data instanceof FormData) {
+            xhr.send(data);
+        } else {
+            xhr.send(JSON.stringify(data));
+        }
         });
     }
 }

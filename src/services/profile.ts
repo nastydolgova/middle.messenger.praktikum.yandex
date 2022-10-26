@@ -60,4 +60,5 @@ export const changePassword = async (
             dispatch({ isLoading: false })
             return
         }
+        window.router.go('/chat')
     }

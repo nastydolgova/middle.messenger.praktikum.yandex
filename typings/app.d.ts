@@ -11,6 +11,7 @@ declare global {
         screen: Screens | null
         isLoading: boolean
         user: User | null
+        chatList: any[]
     }
 
     export type User = {

@@ -27,6 +27,7 @@
     position: relative;
     padding: 10px;
     padding-top: 0;
+    height: 100%;
 }
 
 .chat__last-update{

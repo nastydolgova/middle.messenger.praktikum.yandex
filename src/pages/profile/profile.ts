@@ -44,7 +44,7 @@ export class ProfilePage extends Block<ProfilePageProps> {
     }
 
     render() {
-        if(!this.props.user!.login){
+        if(!this.props.user){
             return `Авторизауйтесь для просмотра`
         } else {
             return  `

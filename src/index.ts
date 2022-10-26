@@ -1,5 +1,6 @@
 import { registerComponent, PathRouter, CoreRouter, Store } from 'core'
 import { initApp } from './services/initApp'
+import { getChatList } from './services/chat'
 import { defaultState } from './store'
 import { initRouter } from './router'
 
@@ -62,4 +63,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initRouter(router, store)
 
     store.dispatch(initApp)
+    store.dispatch(getChatList)
 })

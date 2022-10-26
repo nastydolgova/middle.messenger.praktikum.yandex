@@ -4,7 +4,7 @@ import { getScreenComponent, Screens } from './utils'
 const routes = [
     {
         path: '/',
-        block: Screens.Login,
+        block: Screens.Chat,
         shouldAuthorized: false,
     },
     {

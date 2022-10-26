@@ -119,7 +119,6 @@ export class EditPage extends Block<EditPageProps> {
                         }
                     })
                     this.props.store.dispatch(changePassword, Object.fromEntries(passwords));
-                    this.props.store.dispatch(me);
                 }
             },
             setAvatar: (e: any): void => {

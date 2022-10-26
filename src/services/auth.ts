@@ -81,7 +81,7 @@ export const signup = async (
         return
     }
 
-    dispatch({ user: transformUser(responseUser as UserDTO) })
+    dispatch({ user: responseUser as UserDTO })
 
     window.router.go('/chat')
 }
@@ -99,7 +99,7 @@ export const me = async(
         return
     }
 
-    dispatch({ user: transformUser(responseUser as UserDTO) })
+    dispatch({ user: responseUser as UserDTO })
 
     window.router.go('/chat')
 }

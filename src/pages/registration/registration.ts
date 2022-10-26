@@ -85,9 +85,7 @@ export class RegPage extends Block<RegPageProps> {
                             info.push([item.name , item.value])
                         }
                     })
-                    debugger
                     this.props.store.dispatch(signup, Object.fromEntries(info) as Info)
-                    debugger
                 }
             },
             validate: (): void => {
