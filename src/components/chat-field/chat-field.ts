@@ -4,6 +4,7 @@ import './chat-field.css'
 
 type ChatFieldProps = {
     isPopUpOpen: boolean
+    chatId: number
     isOpen?: () => void
 }
 

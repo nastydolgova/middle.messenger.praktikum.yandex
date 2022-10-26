@@ -177,7 +177,7 @@ export class EditPage extends Block<EditPageProps> {
                     <form>
                         <p class="file__description">Для изменения аватара загрузите изображение</p>
                         <label class="file__label">
-                            <img src="${`https://ya-praktikum.tech/api/v2/resources` + this.props.user!.avatar}" width="50" height="50" alt="Аватар">
+                            <img src="${ this.props.user!.avatar ? `https://ya-praktikum.tech/api/v2/resources` + this.props.user!.avatar : '#'}" width="50" height="50" alt="Аватар">
                             <input type="file" name="avatar" id="avatar" accept="image/*,image/jpeg">
                         </label>
                         {{{Button class="form__btn btn__events" text="Сохранить изображение" onClick=setAvatar}}}

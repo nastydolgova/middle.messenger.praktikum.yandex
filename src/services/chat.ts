@@ -9,7 +9,7 @@ export const getChatList = async (
     dispatch({ isLoading: true })
 
     const response: any = await chatAPI.getChatList()
-    if (apiHasError(response)) {
+    if (apiHasError(response.response) || apiHasError(response)) {
         //@ts-ignore
         dispatch({ isLoading: false })
         return
@@ -22,7 +22,7 @@ export const getChatList = async (
         unreadCount: chat.unread_count,
         time: chat.last_message?.time || '',
         text: chat.last_message?.content || ''
-      }));
+    }));
 
 
     dispatch({chatList})

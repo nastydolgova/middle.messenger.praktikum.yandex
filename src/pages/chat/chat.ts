@@ -9,7 +9,9 @@ type ChatPageProps = {
     store: Store<AppState>
     user: User | null
     chatList: any[]
+    activeChat: number
     onNavigateNext?: () => void
+    selectChat: (e: any) => void
     addChat: () => void
 }
 
@@ -19,16 +21,21 @@ export class ChatPage extends Block<ChatPageProps> {
         super(props)
     
         this.setProps({
+            activeChat: 0,
             onNavigateNext: () => {
                 if (this.props.store.getState().user) {
                 this.props.router.go('/profile')
                 } else {
-                this.props.router.go('/login')
+                    //@ts-ignore
+                    window.location.pathname('/login')
                 }
             },
             addChat: () => {
                 const inputEl = this.element?.querySelector('input[name=title]') as HTMLInputElement
                 this.props.store.dispatch(addChat, {title: inputEl.value})
+            },
+            selectChat: (e: any) => {
+                this.props.activeChat = e.path[1].id
             }
         })
     }
@@ -37,7 +44,7 @@ export class ChatPage extends Block<ChatPageProps> {
             return `Авторизауйтесь для просмотра`
         } else {
             let chats = this.props.store.getState().chatList
-            console.log(chats)
+            let activeChat = this.props.activeChat
             return `
                 <div class="container">
                     <section class="chat-list">
@@ -45,13 +52,16 @@ export class ChatPage extends Block<ChatPageProps> {
                     {{{Button class="chat-list__link chat__link btn__events" text="Профиль" onClick=onNavigateNext}}}
                     </div>
                     ${(chats.map(item => 
-                        `{{{ ChatItem 
-                            chatAvatar="${item.chatAvatar}"
-                            text="${item.text}"
-                            time="${item.time}"
-                            title="${item.title}"
-                            unreadCount="${item.unreadCount}"
-                        }}}
+                        `<div class="chat__item-click" id="${item.id}">
+                            {{{Button onClick=selectChat class="chat__btn-choose"}}}
+                            {{{ ChatItem 
+                                chatAvatar="${item.chatAvatar}"
+                                text="${item.text}"
+                                time="${item.time}"
+                                title="${item.title}"
+                                unreadCount="${item.unreadCount}"
+                            }}}
+                        </div>
                         `
                     )).join(' ')}
                     <div class="chat__add">
@@ -63,7 +73,7 @@ export class ChatPage extends Block<ChatPageProps> {
                         {{{Button class="chat-list__link chat__link btn__events" text="Добавить чат" onClick=addChat}}}
                     </div>
                     </section> 
-                    {{{ ChatField }}}
+                    ${ (activeChat == 0) ? `{{{ ChatEmpty }}}` : `{{{ ChatField chatId=${activeChat}}}}`}
                 </div>
             `
         }

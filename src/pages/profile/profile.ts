@@ -44,7 +44,7 @@ export class ProfilePage extends Block<ProfilePageProps> {
     }
 
     render() {
-        if(!this.props.user){
+        if(!this.props || !this.props.user ){
             return `Авторизауйтесь для просмотра`
         } else {
             return  `
@@ -54,7 +54,7 @@ export class ProfilePage extends Block<ProfilePageProps> {
                     </div>
                     <section class="profile">
                         <img class="profile__img" 
-                            src="${`https://ya-praktikum.tech/api/v2/resources` + this.props.user!.avatar}" 
+                            src="${ this.props.user!.avatar ? `https://ya-praktikum.tech/api/v2/resources` + this.props.user!.avatar : '#'}" 
                             width="130" height="130" alt="Аватар"
                         >
                         <form>
