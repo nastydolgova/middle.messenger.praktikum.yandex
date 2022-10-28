@@ -2,13 +2,14 @@ import { Block } from 'core'
 import { CoreRouter, Store } from 'core'
 import { withUser, withStore, withRouter } from 'utils'
 import { addChat } from 'services/chat'
+import { Chat } from 'models/ChatModel'
 import './chat.css'
 
 type ChatPageProps = {
     router: CoreRouter
     store: Store<AppState>
     user: User | null
-    chatList: any[]
+    chatList: Chat[]
     activeChat: number
     onNavigateNext?: () => void
     selectChat: (e: any) => void
@@ -35,6 +36,7 @@ export class ChatPage extends Block<ChatPageProps> {
                 this.props.store.dispatch(addChat, {title: inputEl.value})
             },
             selectChat: (e: any) => {
+                console.log(e)
                 this.props.activeChat = e.path[1].id
             }
         })
@@ -51,19 +53,19 @@ export class ChatPage extends Block<ChatPageProps> {
                     <div class="chat__info">
                     {{{Button class="chat-list__link chat__link btn__events" text="Профиль" onClick=onNavigateNext}}}
                     </div>
-                    ${(chats.map(item => 
-                        `<div class="chat__item-click" id="${item.id}">
-                            {{{Button onClick=selectChat class="chat__btn-choose"}}}
-                            {{{ ChatItem 
-                                chatAvatar="${item.chatAvatar}"
-                                text="${item.text}"
-                                time="${item.time}"
-                                title="${item.title}"
-                                unreadCount="${item.unreadCount}"
-                            }}}
-                        </div>
-                        `
-                    )).join(' ')}
+                        ${(chats.map(item => 
+                            `<div class="chat__item-click" id="${item.id}">
+                                {{{Button onClick=selectChat class="chat__btn-choose"}}}
+                                {{{ ChatItem 
+                                    chat_avatar="${item.chat_avatar}"
+                                    text="${item.text}"
+                                    time="${item.time}"
+                                    title="${item.title}"
+                                    unread_count="${item.unread_count}"
+                                }}}
+                            </div>
+                            `
+                        )).join(' ')}
                     <div class="chat__add">
                         {{{ ControlledInput
                             type="text"
@@ -73,7 +75,7 @@ export class ChatPage extends Block<ChatPageProps> {
                         {{{Button class="chat-list__link chat__link btn__events" text="Добавить чат" onClick=addChat}}}
                     </div>
                     </section> 
-                    ${ (activeChat == 0) ? `{{{ ChatEmpty }}}` : `{{{ ChatField chatId=${activeChat}}}}`}
+                    ${ (activeChat == 0) ? `{{{ ChatEmpty }}}` : `{{{ ChatField chatId=${activeChat} router=router store=store}}}`}
                 </div>
             `
         }

@@ -1,9 +1,8 @@
 import { profileAPI, UserData, PasswordPayload } from 'api/profile'
 import { authAPI } from 'api/auth'
-
-import { UserDTO } from 'api/types'
 import type { Dispatch } from 'core'
 import { apiHasError } from 'utils'
+import { logout } from './auth'
 
 export const setAvatar = async (
     dispatch: Dispatch<AppState>,
@@ -11,25 +10,26 @@ export const setAvatar = async (
     action: FormData,
 ) => {
     dispatch({ isLoading: true })
-
-    const response = await profileAPI.setAvatar(action)
-        //@ts-ignore
-    if (apiHasError(response)) {
-        //@ts-ignore
+    try {
+        const response = await profileAPI.setAvatar(action)
+            //@ts-ignore
+        if (apiHasError(response)) {
+            //@ts-ignore
+            dispatch({ isLoading: false })
+            return
+        }
+        const responseUser = await authAPI.me()
         dispatch({ isLoading: false })
-        return
+        //@ts-ignore
+        if (apiHasError(response)) {
+            return
+        }
+        //@ts-ignore
+        dispatch({ user: responseUser.response  as User})
+    } catch(err) {
+        dispatch(logout)
+        console.log(err)
     }
-
-    const responseUser = await authAPI.me()
-
-    dispatch({ isLoading: false })
-    //@ts-ignore
-    if (apiHasError(response)) {
-        return
-    }
-
-    //@ts-ignore
-    dispatch({ user: responseUser.response  as UserDTO})
 }
 
 export const sendProfile = async (
@@ -38,14 +38,20 @@ export const sendProfile = async (
     action: UserData,
 ) => {
     dispatch({ isLoading: true })
-    const response = await profileAPI.sendProfile(action)
-        //@ts-ignore
-        if (apiHasError(response)) {
+    try {
+        const response = await profileAPI.sendProfile(action)
             //@ts-ignore
-            dispatch({ isLoading: false })
-            return
-        }
+            if (apiHasError(response)) {
+                //@ts-ignore
+                dispatch({ isLoading: false })
+                return
+            }
+    } catch(err) {
+        dispatch(logout)
+        console.log(err)
     }
+}
+
 
 export const changePassword = async (
     dispatch: Dispatch<AppState>,
@@ -53,12 +59,17 @@ export const changePassword = async (
     action: PasswordPayload,
 ) => {
     dispatch({ isLoading: true })
-    const response = await profileAPI.changePassword(action)
-        //@ts-ignore
-        if (apiHasError(response)) {
+    try  {
+        const response = await profileAPI.changePassword(action)
             //@ts-ignore
-            dispatch({ isLoading: false })
-            return
-        }
-        window.router.go('/chat')
+            if (apiHasError(response)) {
+                //@ts-ignore
+                dispatch({ isLoading: false })
+                return
+            }
+            window.router.go('/chat')
+    } catch(err) {
+        dispatch(logout)
+        console.log(err)
     }
+}

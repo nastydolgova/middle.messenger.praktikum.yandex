@@ -1,7 +1,6 @@
 import { authAPI } from 'api/auth'
-import { UserDTO } from 'api/types'
 import type { Dispatch } from 'core'
-import { transformUser, apiHasError } from 'utils'
+import { apiHasError } from 'utils'
 
 type LoginPayload = {
     login: string
@@ -23,39 +22,41 @@ export const login = async (
     action: LoginPayload,
 ) => {
     dispatch({ isLoading: true })
-
-    const response = await authAPI.login(action)
-        //@ts-ignore
-    if (response.reason) {
-        //@ts-ignore
+    try {
+        const response = await authAPI.login(action)
+            //@ts-ignore
+        if (response.reason) {
+            //@ts-ignore
+            dispatch({ isLoading: false })
+            window.router.go('/login')
+            return
+        }
+        const responseUser = await authAPI.me()
         dispatch({ isLoading: false })
-        window.router.go('/login')
-        return
-    }
-
-    const responseUser = await authAPI.me()
-
-    dispatch({ isLoading: false })
+        //@ts-ignore
+        if (responseUser.reason) {
+            dispatch(logout)
+            return
+        }
     //@ts-ignore
-    if (responseUser.reason) {
+        dispatch({ user: responseUser.response  as User})
+        window.router.go('/chat')
+    } catch (err) {
         dispatch(logout)
-        return
+        console.log(err)
     }
-
-    //@ts-ignore
-    dispatch({ user: responseUser.response  as UserDTO})
-
-    window.router.go('/chat')
 }
 
 export const logout = async (dispatch: Dispatch<AppState>) => {
     dispatch({ isLoading: true })
-
-    await authAPI.logout()
-
-    dispatch({ isLoading: false, user: null })
-
-    window.router.go('/login')
+    try {
+        await authAPI.logout()
+        dispatch({ isLoading: false, user: null })
+        window.router.go('/login')
+    } catch (err) {
+        dispatch(logout)
+        console.log(err)
+    }
 }
 
 export const signup = async (
@@ -64,26 +65,24 @@ export const signup = async (
     action: SingUpPayload,
 ) => {
     dispatch({ isLoading: true })
-    debugger
-    const response = await authAPI.signup(action)
-
-    if (apiHasError(response)) {
+    try {
+        const response = await authAPI.signup(action)
+        if (apiHasError(response)) {
+            dispatch({ isLoading: false })
+            return
+        }
+        const responseUser = await authAPI.me()
         dispatch({ isLoading: false })
-        return
-    }
-
-    const responseUser = await authAPI.me()
-
-    dispatch({ isLoading: false })
-
-    if (apiHasError(responseUser)) {
+        if (apiHasError(responseUser)) {
+            dispatch(logout)
+            return
+        }
+        dispatch({ user: responseUser as User })
+        window.router.go('/chat')
+    } catch(err) {
         dispatch(logout)
-        return
+        console.log(err)
     }
-
-    dispatch({ user: responseUser as UserDTO })
-
-    window.router.go('/chat')
 }
 
 export const me = async(
@@ -91,15 +90,17 @@ export const me = async(
     state: AppState,
 ) => {
     dispatch({ isLoading: true })
-    const responseUser = await authAPI.me()
-    dispatch({ isLoading: false })
-
-    if (apiHasError(responseUser)) {
+    try{
+        const responseUser = await authAPI.me()
+        dispatch({ isLoading: false })
+        if (apiHasError(responseUser)) {
+            dispatch(logout)
+            return
+        }
+        dispatch({ user: responseUser as User })
+        window.router.go('/chat')
+    } catch(err) {
         dispatch(logout)
-        return
+        console.log(err)
     }
-
-    dispatch({ user: responseUser as UserDTO })
-
-    window.router.go('/chat')
 }

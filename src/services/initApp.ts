@@ -1,5 +1,4 @@
 import { authAPI } from 'api/auth'
-import { UserDTO } from 'api/types'
 import type { Dispatch } from 'core'
 import { apiHasError } from 'utils'
 
@@ -14,7 +13,7 @@ export async function initApp(dispatch: Dispatch<AppState>) {
             return
         }
         //@ts-ignore
-        dispatch({ user: response.response as UserDTO });
+        dispatch({ user: response.response as User })
     } catch (err) {
         console.error(err)
     } finally {

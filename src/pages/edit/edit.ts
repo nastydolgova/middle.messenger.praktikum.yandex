@@ -4,7 +4,6 @@ import { Field } from 'models/FieldModel'
 import { CoreRouter, Store } from 'core'
 import { withUser, withStore, withRouter } from 'utils'
 import { setAvatar, sendProfile, changePassword } from 'services/profile'
-import { me } from 'services/auth'
 
 import './edit.css'
 
@@ -105,29 +104,29 @@ export class EditPage extends Block<EditPageProps> {
                     if (this.refs[item.name+'InputRef'].refs.errorRef.props.text != '') isCorrect = false
                 })
                 if (isCorrect) {
-                    let info: any[] = []
+                    let info: string[][] = []
                     fields.forEach((item: Field) => {
                         if(item.value && item.name != 'newPassword' && item.name != 'oldPassword'){
                             info.push([item.name , item.value])
                         }
                     })
-                    this.props.store.dispatch(sendProfile, Object.fromEntries(info));
+                    this.props.store.dispatch(sendProfile, Object.fromEntries(info))
                     let passwords: any[] = []
                     fields.forEach((item: Field) => {
                         if(item.name == 'newPassword' || item.name == 'oldPassword'){
                             passwords.push([item.name , item.value])
                         }
                     })
-                    this.props.store.dispatch(changePassword, Object.fromEntries(passwords));
+                    this.props.store.dispatch(changePassword, Object.fromEntries(passwords))
                 }
             },
             setAvatar: (e: any): void => {
                 e.preventDefault()
-                const avatar = document.getElementById("avatar") as HTMLInputElement;
-                const formData: any = new FormData();
+                const avatar = document.getElementById("avatar") as HTMLInputElement
+                const formData: FormData = new FormData()
                 if (avatar.files && avatar!.files[0]) {
-                    formData.append("avatar", avatar!.files[0]);
-                    this.props.store.dispatch(setAvatar, formData);
+                    formData.append("avatar", avatar!.files[0])
+                    this.props.store.dispatch(setAvatar, formData)
                 }
             },
             validate: (): void => {

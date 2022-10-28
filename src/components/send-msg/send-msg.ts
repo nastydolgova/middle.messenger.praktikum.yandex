@@ -8,7 +8,7 @@ interface SentMsgProps {
 }
 
 export class SendMsg extends Block {
-    static componentName = 'SendMsg';
+    static componentName = 'SendMsg'
 
     constructor() {
         super({

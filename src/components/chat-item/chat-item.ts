@@ -3,11 +3,11 @@ import { Block } from 'core'
 import './chat-item.css'
 
 interface ChatItemProps {
-    chatAvatar: string
+    chat_avatar: string
     text: string
     time: string
     title: string
-    unreadCount: string
+    unread_count: number
 }
 
 export class ChatItem extends Block<ChatItemProps> {
@@ -20,14 +20,14 @@ export class ChatItem extends Block<ChatItemProps> {
         return `
             <div class="chats__wrp">
                 <div class="chats__item chat btn__events">
-                    <img class="chat__img" src="{{chatAvatar}}" width="47" height="47" alt="Аватар">
+                    <img class="chat__img" src="{{chat_avatar}}" width="47" height="47" alt="Аватар">
                     <div class="chat__description">
                         <p class="chat__name"> {{ title }} </p>
                         <p class="chat__last-msg">
                             {{ text }}
                         </p>
                         <span class="chat__last-update">{{ time }}</span>
-                        <span class="chat__msg-count"> {{ unreadCount }}</span>
+                        ${ this.props.unread_count == 0 ? '' :`<span class="chat__msg-count"> {{ unread_count }}</span>`}
                     </div>
                 </div> 
             </div>

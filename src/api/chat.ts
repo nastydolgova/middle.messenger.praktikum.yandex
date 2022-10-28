@@ -1,12 +1,12 @@
 import { HTTP } from 'core/HTTP'
 
 export type AddChatData = {
-    title: string;
+    title: string
 };
 
 export type AddUserData = {
-    users: number[];
-    chatId: number;
+    users: number[]
+    chatId: number
 }
 
 export const chatAPI = {

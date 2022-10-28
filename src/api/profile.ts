@@ -1,17 +1,17 @@
 import { HTTP } from 'core/HTTP'
 
 export type PasswordPayload = {
-    oldPassword: string;
-    newPassword: string;
+    oldPassword: string
+    newPassword: string
 }
 
 export type UserData = {
-    login: string;
-    password: string;
-    first_name: string;
-    second_name: string;
-    email: string;
-    phone: string;
+    login: string
+    password: string
+    first_name: string
+    second_name: string
+    email: string
+    phone: string
 }
 
 export const profileAPI = {

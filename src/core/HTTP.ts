@@ -12,7 +12,7 @@ export class HTTP {
         return this.request(url, {...options, method: METHODS.GET})
     }
 
-    static put(url: string, options: any){
+    static put(url: string, options = {}){
         return this.request(url, {...options, method: METHODS.PUT})
     }
 

@@ -100,7 +100,7 @@ export class RegPage extends Block<RegPageProps> {
                 })
             },
             onLog: (): void => {
-                this.props.router.go('/login');
+                this.props.router.go('/login')
             }
         })
     }
