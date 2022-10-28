@@ -1,5 +1,5 @@
 import { Block } from 'core'
-import { validateForm, ValidateType } from 'helpers/validateForm'
+import { validateForm } from 'helpers/validateForm'
 
 import './send-msg.css'
 
