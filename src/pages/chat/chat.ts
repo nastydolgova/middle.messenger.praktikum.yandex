@@ -40,12 +40,7 @@ export class ChatPage extends Block<ChatPageProps> {
             },
             selectChat: (e: any) => {
                 this.props.activeChat = e.path[1].id
-                this.props.store.dispatch(getToken, this.props.activeChat)
-                if(this.props.store.getState().selectChatToken){
-                //@ts-ignore
-                    let props = [this.props.user?.id, this.props.activeChat, this.props.store.getState().selectChatToken]
-                    this.props.store.dispatch(connectUserToChat, props)
-                }
+                this.props.store.dispatch(getToken, [this.props.user?.id, this.props.activeChat])
             }
         })
     }

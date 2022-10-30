@@ -4,12 +4,14 @@ import { messagesAPI } from 'api/messages'
 export const getToken = async (
     dispatch: Dispatch<AppState>,
     state: AppState,
-    action: string,
+    action: string[],
 ) => {
     dispatch({ isLoading: true })
     try {
-        const response: any = await messagesAPI.getToken(action)
+        let activeChat = action[1]
+        const response: any = await messagesAPI.getToken(activeChat)
         dispatch({ selectChatToken: response.response.token})
+        dispatch(connectUserToChat, [action[0], action[1], response.response.token])
     } catch(err) {
         console.log(err)
     }
