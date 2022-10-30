@@ -25,38 +25,35 @@ export const getToken = async (
 
     console.log(action)
 
-    let userId = action[0]  
-    let chatId = action[1] 
-    let token = action[2] 
+    const [userId, chatId, token] = action   
 
-    const socket = messagesAPI.initSocket(+userId, +chatId, token);
+    const socket = messagesAPI.initSocket(+userId, +chatId, token)
     dispatch({socket})
     socket.onopen = () => {
-        console.log('Соединение установлено');
+        console.log('Соединение установлено')
             socket.send(JSON.stringify({
             content: '0',
             type: 'get old',
-        }));
-    };
+        }))
+    }
 
     socket.onclose = function(event) {
         if (event.wasClean) {
-            alert('Соединение закрыто чисто');
+            alert('Соединение закрыто чисто')
         } else {
-            alert('Обрыв соединения'); // 
+            alert('Обрыв соединения')
         }
-        alert('Код: ' + event.code + ' причина: ' + event.reason);
-    };
+    }
 
     socket.onmessage = function(event) {
         let messages = JSON.parse(event.data).reverse()
         dispatch({ messages: messages})
-    };
+    }
 
     socket.onerror = function(error) {
-        alert("Ошибка " + error);
-        socket.close();
-    };
+        alert("Ошибка " + error)
+        socket.close()
+    }
 }
 
 export const sendMessage = async (
@@ -64,18 +61,15 @@ export const sendMessage = async (
     state: AppState,
     action: any[],
 ) => {  
-    let message: string = action[0]
-    let socket: WebSocket = action[1]
-    let mesgs: any[] = action[2]
-
+    const [message, socket, mesgs] = action
     socket.send(JSON.stringify({
         content: message,
         type: 'message',
-    }));
+    }))
 
-    socket.onmessage = function(event) {
+    socket.onmessage = function(event: any) {
         let messages = JSON.parse(event.data)
         mesgs.push(messages)
         dispatch({ messages: mesgs})
-    };
-};
+    }
+}

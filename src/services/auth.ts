@@ -1,7 +1,7 @@
 import { authAPI } from 'api/auth'
 import type { Dispatch } from 'core'
 import { apiHasError } from 'utils'
-
+import { getChatList } from './chat'
 type LoginPayload = {
     login: string
     password: string
@@ -31,6 +31,7 @@ export const login = async (
             window.router.go('/login')
             return
         }
+        dispatch(getChatList)
         const responseUser = await authAPI.me()
         dispatch({ isLoading: false })
         //@ts-ignore
@@ -50,9 +51,9 @@ export const login = async (
 export const logout = async (dispatch: Dispatch<AppState>) => {
     dispatch({ isLoading: true })
     try {
-        await authAPI.logout()
+        let response = await authAPI.logout()
         dispatch({ isLoading: false, user: null })
-        window.router.go('/login')
+        if(response) window.router.go('/login')
     } catch (err) {
         dispatch(logout)
         console.log(err)
@@ -71,6 +72,7 @@ export const signup = async (
             dispatch({ isLoading: false })
             return
         }
+        dispatch(getChatList)
         const responseUser = await authAPI.me()
         dispatch({ isLoading: false })
         if (apiHasError(responseUser)) {
@@ -98,6 +100,7 @@ export const me = async(
             return
         }
         dispatch({ user: responseUser as User })
+        dispatch(getChatList)
         window.router.go('/chat')
     } catch(err) {
         dispatch(logout)

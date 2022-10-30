@@ -11,7 +11,7 @@ export const getChatList = async (
     dispatch({ isLoading: true })
     try {
         const response: any = await chatAPI.getChatList()
-        if (apiHasError(response.response as Chat[]) || apiHasError(response)) {
+        if (apiHasError(response.response) || apiHasError(response)) {
             //@ts-ignore
             dispatch({ isLoading: false })
             return
@@ -84,7 +84,6 @@ export const deleteUser = async (
             dispatch({ isLoading: false })
             return
         }
-
         dispatch(getChatList)
     } catch(err) {
         dispatch(logout)

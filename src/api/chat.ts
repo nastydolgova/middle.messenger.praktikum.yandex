@@ -2,7 +2,7 @@ import { HTTP } from 'core/HTTP'
 
 export type AddChatData = {
     title: string
-};
+}
 
 export type AddUserData = {
     users: number[]

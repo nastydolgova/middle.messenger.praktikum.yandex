@@ -11,8 +11,8 @@ declare global {
         screen: Screens | null
         isLoading: boolean
         user: User | null
-        chatList: any[]
-        messages: any[]
+        chatList: []
+        messages: []
         socket: null | WebSocket
         selectChatToken: string | null
     }
