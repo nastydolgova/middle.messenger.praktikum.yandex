@@ -3,5 +3,8 @@ export const defaultState: AppState = {
     isLoading: false,
     screen: null,
     user: null,
-    chatList: []
+    chatList: [],
+    messages: [],
+    socket: null,
+    selectChatToken: null,
 }

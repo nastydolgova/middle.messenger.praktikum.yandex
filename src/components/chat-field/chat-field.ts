@@ -38,8 +38,8 @@ export class ChatField extends Block<ChatFieldProps> {
                             </div>
                         {{/if}}
                     </div>
-                    {{{ WrpMsgs }}}
-                    {{{ SendMsg }}}
+                    {{{ WrpMsgs router=router store=store}}}
+                    {{{ SendMsg  router=router store=store}}}
                 <div>
             </section>
         `

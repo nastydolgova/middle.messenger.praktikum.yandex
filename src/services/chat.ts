@@ -3,6 +3,7 @@ import type { Dispatch } from 'core'
 import { apiHasError } from 'utils'
 import { Chat } from 'models/ChatModel'
 import { logout } from './auth'
+
 export const getChatList = async (
     dispatch: Dispatch<AppState>,
     state: AppState,

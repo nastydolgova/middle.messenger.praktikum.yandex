@@ -9,7 +9,6 @@ import './app.css'
 import ChatEmpty from './components/chat-empty'
 import ChatField from './components/chat-field'
 import ChatItem from './components/chat-item'
-import MsgInfo from './components/msg-info'
 import SendMsg from './components/send-msg'
 import UserPopup from './components/user-popup'
 import WrpMsgs from './components/wrp__msgs'
@@ -23,7 +22,6 @@ import SendButton from './components/send-button'
 registerComponent(ChatEmpty)
 registerComponent(ChatField)
 registerComponent(ChatItem)
-registerComponent(MsgInfo)
 registerComponent(SendMsg)
 registerComponent(TextArea)
 registerComponent(UserPopup)

@@ -12,6 +12,9 @@ declare global {
         isLoading: boolean
         user: User | null
         chatList: any[]
+        messages: any[]
+        socket: null | WebSocket
+        selectChatToken: string | null
     }
 
     export type User = {

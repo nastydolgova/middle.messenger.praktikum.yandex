@@ -1,25 +1,40 @@
 import { Block } from 'core'
 import { validateForm } from 'helpers/validateForm'
-
+import { CoreRouter, Store } from 'core'
+import { sendMessage } from 'services/messages'
+import type { Dispatch } from 'core'
 import './send-msg.css'
 
 interface SentMsgProps {
+    router: CoreRouter
+    store: Store<AppState>
     onClick: () => void
+    socket: WebSocket
+    onBlur: () => void
+    onSubmit: (e: any) => void
+    validate: () => void
 }
 
-export class SendMsg extends Block {
+export class SendMsg extends Block<SentMsgProps> {
     static componentName = 'SendMsg'
 
-    constructor() {
-        super({
+    constructor(props: SentMsgProps) {
+        super(props)
+        
+        this.setProps({
                 onBlur:() => {
                     this.props.validate()
                 },
-                onSubmit: (): void => {
+                onSubmit: (e: any): void => {
+                    e.preventDefault()
                     const textAreaEl = this.element?.querySelector("[name=message]") as HTMLTextAreaElement
                     const error = validateForm([{type: textAreaEl.name, value: textAreaEl.value}])
                     this.refs.errorRef.setProps({ text: error })
-                    if(!error) console.log({message: textAreaEl.value})
+                    if(!error) {
+                        console.log({message: textAreaEl.value})
+                        console.log(5, this.props)
+                        this.props.store.dispatch(sendMessage, [textAreaEl.value,  this.props.store.getState().socket, this.props.store.getState().messages])
+                    }
                 },
                 validate: (): void => {
                     const textAreaEl = this.element?.querySelector("[name=message]") as HTMLTextAreaElement

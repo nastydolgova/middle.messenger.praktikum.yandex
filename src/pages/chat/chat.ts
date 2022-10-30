@@ -3,6 +3,7 @@ import { CoreRouter, Store } from 'core'
 import { withUser, withStore, withRouter } from 'utils'
 import { addChat } from 'services/chat'
 import { Chat } from 'models/ChatModel'
+import { getToken, connectUserToChat } from 'services/messages'
 import './chat.css'
 
 type ChatPageProps = {
@@ -10,6 +11,8 @@ type ChatPageProps = {
     store: Store<AppState>
     user: User | null
     chatList: Chat[]
+    socket: WebSocket
+    selectChatToken: string
     activeChat: number
     onNavigateNext?: () => void
     selectChat: (e: any) => void
@@ -36,8 +39,13 @@ export class ChatPage extends Block<ChatPageProps> {
                 this.props.store.dispatch(addChat, {title: inputEl.value})
             },
             selectChat: (e: any) => {
-                console.log(e)
                 this.props.activeChat = e.path[1].id
+                this.props.store.dispatch(getToken, this.props.activeChat)
+                if(this.props.store.getState().selectChatToken){
+                //@ts-ignore
+                    let props = [this.props.user?.id, this.props.activeChat, this.props.store.getState().selectChatToken]
+                    this.props.store.dispatch(connectUserToChat, props)
+                }
             }
         })
     }
