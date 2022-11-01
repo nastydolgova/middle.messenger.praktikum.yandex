@@ -1,6 +1,6 @@
 import { Block } from 'core'
 import { CoreRouter, Store } from 'core'
-import type { Dispatch } from 'core'
+
 
 import './wrp__msgs.css'
 

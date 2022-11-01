@@ -11,7 +11,7 @@ interface SentMsgProps {
     onClick: () => void
     socket: WebSocket
     onBlur: () => void
-    onSubmit: (e: any) => void
+    onSubmit: (e: Event) => void
     validate: () => void
 }
 
@@ -25,14 +25,12 @@ export class SendMsg extends Block<SentMsgProps> {
                 onBlur:() => {
                     this.props.validate()
                 },
-                onSubmit: (e: any): void => {
+                onSubmit: (e: Event): void => {
                     e.preventDefault()
                     const textAreaEl = this.element?.querySelector("[name=message]") as HTMLTextAreaElement
                     const error = validateForm([{type: textAreaEl.name, value: textAreaEl.value}])
                     this.refs.errorRef.setProps({ text: error })
                     if(!error) {
-                        console.log({message: textAreaEl.value})
-                        console.log(5, this.props)
                         this.props.store.dispatch(sendMessage, [textAreaEl.value,  this.props.store.getState().socket, this.props.store.getState().messages])
                     }
                 },
@@ -74,4 +72,3 @@ export class SendMsg extends Block<SentMsgProps> {
         `
     }
 }
-

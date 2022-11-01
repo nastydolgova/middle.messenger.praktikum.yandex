@@ -23,4 +23,3 @@ export class TextArea extends Block {
         `
     }
 }
-

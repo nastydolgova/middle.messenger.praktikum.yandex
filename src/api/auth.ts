@@ -14,6 +14,7 @@ export type SignupRequestData = {
     phone: string
 }
 
+
 export const authAPI = {
     login: (data: LoginRequestData) => HTTP.post('auth/signin', { data }),
 

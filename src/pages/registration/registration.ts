@@ -13,9 +13,9 @@ type RegPageProps = {
     store: Store<AppState>
     user: User | null
     back?: () => void
-    onInput: (e: any) => void
+    onInput: (e: Event) => void
     onFocus: () => void
-    onSubmit: (e: any) => void
+    onSubmit: (e: Event) => void
     validate: () => void
     onLog: () => void
 }
@@ -59,7 +59,7 @@ export class RegPage extends Block<RegPageProps> {
         super(props)
 
         this.setProps({
-            onInput: (e: any): void  => {
+            onInput: (e: Event): void  => {
                 let errorMsg = validateForm([
                     {type: e.target.name, value: e.target.value},
                 ]) 
@@ -68,9 +68,8 @@ export class RegPage extends Block<RegPageProps> {
                 let field = fields.find((item: Field) => item.name == e.target.name)
                 if(field) field.value = e.target.value
             },
-            onFocus: (): void => console.log('focus'),
-            onSubmit: (e: any): void => {
-                console.log('!')
+            onFocus: (): void => {},
+            onSubmit: (e: Event): void => {
                 e.preventDefault()
                 this.props.validate()
                 let isCorrect = true
@@ -79,7 +78,7 @@ export class RegPage extends Block<RegPageProps> {
                     if (this.refs[item.name + `InputRef`].refs.errorRef.props.text != '') isCorrect = false
                 })
                 if (isCorrect) {
-                    let info: any[] = []
+                    let info: string[][] = []
                     fields.forEach((item: Field) => {
                         if(item.value){
                             info.push([item.name , item.value])

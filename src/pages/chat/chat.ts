@@ -15,7 +15,7 @@ type ChatPageProps = {
     selectChatToken: string
     activeChat: number
     onNavigateNext?: () => void
-    selectChat: (e: any) => void
+    selectChat: (e: Event) => void
     addChat: () => void
 }
 
@@ -38,7 +38,7 @@ export class ChatPage extends Block<ChatPageProps> {
                 const inputEl = this.element?.querySelector('input[name=title]') as HTMLInputElement
                 this.props.store.dispatch(addChat, {title: inputEl.value})
             },
-            selectChat: (e: any) => {
+            selectChat: (e: Event) => {
                 this.props.activeChat = e.path[1].id
                 this.props.store.dispatch(getToken, [this.props.user?.id, this.props.activeChat])
             }
@@ -73,7 +73,7 @@ export class ChatPage extends Block<ChatPageProps> {
                         {{{ ControlledInput
                             type="text"
                             name="title"
-                            label="Имя пользователя"
+                            label="Название чата"
                         }}}
                         {{{Button class="chat-list__link chat__link btn__events" text="Добавить чат" onClick=addChat}}}
                     </div>
@@ -86,4 +86,3 @@ export class ChatPage extends Block<ChatPageProps> {
 }
 
 export default withRouter(withStore(withUser(ChatPage)))
-

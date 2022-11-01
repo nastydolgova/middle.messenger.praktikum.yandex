@@ -25,4 +25,3 @@ export class Input extends Block {
         `
     }
 }
-

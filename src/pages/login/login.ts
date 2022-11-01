@@ -10,7 +10,7 @@ type LoginPageProps = {
     store: Store<AppState>
     onLogin: () => void
     error: string
-    onInput: (e: any) => void
+    onInput: (e: Event) => void
     onFocus: () => void
     onSubmit: () => void
     onReg: () => void
@@ -24,14 +24,14 @@ export class LoginPage extends Block<LoginPageProps> {
 
         this.setProps({
             error: '',
-            onInput: (e: any): void  => {
+            onInput: (e: Event): void  => {
                 let errorMsg = validateForm([
                     {type: e.target.name, value: e.target.value},
                 ]) 
                 // @ts-ignore
                 this.refs[e.target.name + 'InputRef'].refs.errorRef.setProps({ text: errorMsg })
             },
-            onFocus: (): void => console.log('focus'),
+            onFocus: (): void => {},
             onSubmit: (): void => {
                 const loginEl = this.element?.querySelector('input[name="login"]') as HTMLInputElement
                 const passwordEl = this.element?.querySelector('input[name=password]') as HTMLInputElement

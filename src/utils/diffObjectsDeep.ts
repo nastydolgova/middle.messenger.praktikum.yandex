@@ -1,6 +1,3 @@
-/**
- * @see https://stackoverflow.com/questions/8572826/generic-deep-diff-between-two-objects
- */
 export const diffObjectsDeep = {
   VALUE_CREATED: 'created',
   VALUE_UPDATED: 'updated',
@@ -23,7 +20,7 @@ export const diffObjectsDeep = {
       };
     }
 
-    var diff: Indexed = {};
+    let diff: Indexed = {};
     for (var key in obj1) {
       if (this.isFunction(obj1[key])) {
         continue;

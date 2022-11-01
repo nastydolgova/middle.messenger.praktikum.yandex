@@ -2,6 +2,7 @@ import { authAPI } from 'api/auth'
 import type { Dispatch } from 'core'
 import { apiHasError } from 'utils'
 import { getChatList } from './chat'
+
 type LoginPayload = {
     login: string
     password: string
@@ -23,7 +24,7 @@ export const login = async (
 ) => {
     dispatch({ isLoading: true })
     try {
-        const response = await authAPI.login(action)
+        const { response } = await authAPI.login(action)
             //@ts-ignore
         if (response.reason) {
             //@ts-ignore
@@ -40,7 +41,7 @@ export const login = async (
             return
         }
     //@ts-ignore
-        dispatch({ user: responseUser.response  as User})
+        dispatch({ user: responseUser  as User})
         window.router.go('/chat')
     } catch (err) {
         dispatch(logout)
@@ -51,7 +52,7 @@ export const login = async (
 export const logout = async (dispatch: Dispatch<AppState>) => {
     dispatch({ isLoading: true })
     try {
-        let response = await authAPI.logout()
+        const { response } = await authAPI.logout()
         dispatch({ isLoading: false, user: null })
         if(response) window.router.go('/login')
     } catch (err) {
@@ -67,13 +68,13 @@ export const signup = async (
 ) => {
     dispatch({ isLoading: true })
     try {
-        const response = await authAPI.signup(action)
+        const { response } = await authAPI.signup(action)
         if (apiHasError(response)) {
             dispatch({ isLoading: false })
             return
         }
         dispatch(getChatList)
-        const responseUser = await authAPI.me()
+        const  { responseUser } = await authAPI.me()
         dispatch({ isLoading: false })
         if (apiHasError(responseUser)) {
             dispatch(logout)
@@ -82,7 +83,6 @@ export const signup = async (
         dispatch({ user: responseUser as User })
         window.router.go('/chat')
     } catch(err) {
-        dispatch(logout)
         console.log(err)
     }
 }
@@ -93,7 +93,7 @@ export const me = async(
 ) => {
     dispatch({ isLoading: true })
     try{
-        const responseUser = await authAPI.me()
+        const { responseUser } = await authAPI.me()
         dispatch({ isLoading: false })
         if (apiHasError(responseUser)) {
             dispatch(logout)

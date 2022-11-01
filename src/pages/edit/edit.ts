@@ -12,12 +12,12 @@ type EditPageProps = {
     store: Store<AppState>
     user: User | null
     error: string
-    onInput: (e: any) => void
+    onInput: (e: Event) => void
     onFocus: () => void
-    onSubmit: (e: any) => void
+    onSubmit: (e: Event) => void
     validate: () => void
     back?: () => void
-    setAvatar: (e: any) => void
+    setAvatar: (e: Event) => void
 }
 
 const fields: Field[] = [
@@ -85,7 +85,7 @@ export class EditPage extends Block<EditPageProps> {
         super(props)
 
         this.setProps({
-            onInput: (e: any): void  => {
+            onInput: (e: Event): void  => {
                 let errorMsg = validateForm([
                     {type: e.target.name, value: e.target.value},
                 ]) 
@@ -94,8 +94,8 @@ export class EditPage extends Block<EditPageProps> {
                 let currentInput = fields.find((item: Field) => item.name == e.target.name)
                 if(currentInput) currentInput.value = e.target.value
             },
-            onFocus: (): void => console.log('focus'),
-            onSubmit: (e: any): void => {
+            onFocus: (): void => {},
+            onSubmit: (e: Event): void => {
                 e.preventDefault()
                 this.props.validate()
                 let isCorrect = true
@@ -111,7 +111,7 @@ export class EditPage extends Block<EditPageProps> {
                         }
                     })
                     this.props.store.dispatch(sendProfile, Object.fromEntries(info))
-                    let passwords: any[] = []
+                    let passwords: Array<Array<string|undefined>> = []
                     fields.forEach((item: Field) => {
                         if(item.name == 'newPassword' || item.name == 'oldPassword'){
                             passwords.push([item.name , item.value])
@@ -120,7 +120,7 @@ export class EditPage extends Block<EditPageProps> {
                     this.props.store.dispatch(changePassword, Object.fromEntries(passwords))
                 }
             },
-            setAvatar: (e: any): void => {
+            setAvatar: (e: Event): void => {
                 e.preventDefault()
                 const avatar = document.getElementById("avatar") as HTMLInputElement
                 const formData: FormData = new FormData()

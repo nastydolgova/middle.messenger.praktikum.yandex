@@ -7,13 +7,13 @@ export async function initApp(dispatch: Dispatch<AppState>) {
     await new Promise(r => setTimeout(r, 700))
 
     try {
-        const response = await authAPI.me()
+        const { response } = await authAPI.me()
         //@ts-ignore
-        if (apiHasError(response.response)) {
+        if (apiHasError(response)) {
             return
         }
         //@ts-ignore
-        dispatch({ user: response.response as User })
+        dispatch({ user: response as User })
     } catch (err) {
         console.error(err)
     } finally {

@@ -74,9 +74,7 @@ export class HTTP {
                 }
 
                 resolve({
-                    response,
-                    status: xhr.status,
-                    responseHeaders,
+                    response
                 });
         };
 

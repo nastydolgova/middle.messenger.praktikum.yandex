@@ -9,9 +9,9 @@ export const getToken = async (
     dispatch({ isLoading: true })
     try {
         let activeChat = action[1]
-        const response: any = await messagesAPI.getToken(activeChat)
-        dispatch({ selectChatToken: response.response.token})
-        dispatch(connectUserToChat, [action[0], action[1], response.response.token])
+        const { response } = await messagesAPI.getToken(activeChat)
+        dispatch({ selectChatToken: response.token})
+        dispatch(connectUserToChat, [action[0], action[1], response.token])
     } catch(err) {
         console.log(err)
     }
@@ -22,8 +22,6 @@ export const getToken = async (
         state: AppState,
         action: string[]
     ) => {
-
-    console.log(action)
 
     const [userId, chatId, token] = action   
 
