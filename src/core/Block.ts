@@ -130,9 +130,9 @@ export default class Block<P = any> {
 
         this._removeEvents()
         const newElement = fragment.firstElementChild!
-
-        this._element!.replaceWith(newElement)
-
+        if (this._element) {
+            this._element!.replaceWith(newElement)
+        }
         this._element = newElement as HTMLElement
         this._addEvents()
     }

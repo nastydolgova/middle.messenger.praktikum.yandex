@@ -5,7 +5,7 @@ const routes = [
     {
         path: '/',
         block: Screens.Chat,
-        shouldAuthorized: false,
+        shouldAuthorized: true,
     },
     {
         path: '/login',
@@ -48,9 +48,7 @@ export function initRouter(router: CoreRouter, store: Store<AppState>) {
             if (isAuthorized || !route.shouldAuthorized) {
                 store.dispatch({ screen: route.block })
                 return
-            }
-
-            if (!currentScreen) {
+            } else {
                 store.dispatch({ screen: Screens.Login })
             }
         })

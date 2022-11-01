@@ -31,6 +31,7 @@
         "@typescript-eslint/parser": "5.38.0",
         "eslint": "8.24.0",
         "eslint-config-airbnb": "19.0.4",
+        "mocha": "10.1.0",
         "parcel": "2.5.0",
         "postcss": "8.4.12",
         "postcss-custom-media": "8.0.0",
