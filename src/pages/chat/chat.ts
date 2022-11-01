@@ -48,8 +48,8 @@ export class ChatPage extends Block<ChatPageProps> {
         if(!this.props.user){
             return `Авторизауйтесь для просмотра`
         } else {
-            let chats = this.props.store.getState().chatList
-            let activeChat = this.props.activeChat
+            let chats: Chat[] = this.props.store.getState().chatList
+            let activeChat: number = this.props.activeChat
             return `
                 <div class="container">
                     <section class="chat-list">
