@@ -11,14 +11,14 @@ export const setAvatar = async (
 ) => {
     dispatch({ isLoading: true })
     try {
-        const { response } = await profileAPI.setAvatar(action)
+        const response = await profileAPI.setAvatar(action)
             //@ts-ignore
         if (apiHasError(response)) {
             //@ts-ignore
             dispatch({ isLoading: false })
             return
         }
-        const { responseUser } = await authAPI.me()
+        const responseUser = await authAPI.me()
         dispatch({ isLoading: false })
         //@ts-ignore
         if (apiHasError(response)) {

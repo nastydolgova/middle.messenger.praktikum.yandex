@@ -9,9 +9,13 @@ export type AddUserData = {
     chatId: number
 }
 
+export type Response<T> = {
+    response: T
+}
+
 export const chatAPI = {
-    getChatList: () => HTTP.get('chats'),
-    addChat: (data: AddChatData) => HTTP.post('chats', { data }),
-    addUser: (data: AddUserData) => HTTP.put('chats/users', { data }),
-    deleteUser: (data: AddUserData) => HTTP.delete('chats/users', { data }),
+    getChatList: (): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.get('chats'),
+    addChat: (data: AddChatData): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.post('chats', { data }),
+    addUser: (data: AddUserData): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.put('chats/users', { data }),
+    deleteUser: (data: AddUserData): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.delete('chats/users', { data }),
 }

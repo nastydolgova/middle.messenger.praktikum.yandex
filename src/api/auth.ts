@@ -14,13 +14,16 @@ export type SignupRequestData = {
     phone: string
 }
 
+export type Response<T> = {
+    response: T
+}
 
 export const authAPI = {
-    login: (data: LoginRequestData) => HTTP.post('auth/signin', { data }),
+    login: (data: LoginRequestData): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.post('auth/signin', { data }),
 
-    me: () => HTTP.get('auth/user'),
+    me: (): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.get('auth/user'),
 
-    logout: () => HTTP.post('auth/logout'),
+    logout: (): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.post('auth/logout'),
 
-    signup: (data: SignupRequestData) => HTTP.post('auth/signup', { data }),
+    signup: (data: SignupRequestData): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.post('auth/signup', { data }),
 }

@@ -74,14 +74,7 @@ export const signup = async (
             return
         }
         dispatch(getChatList)
-        const  { responseUser } = await authAPI.me()
-        dispatch({ isLoading: false })
-        if (apiHasError(responseUser)) {
-            dispatch(logout)
-            return
-        }
-        dispatch({ user: responseUser as User })
-        window.router.go('/chat')
+        dispatch(me)
     } catch(err) {
         console.log(err)
     }
@@ -93,13 +86,13 @@ export const me = async(
 ) => {
     dispatch({ isLoading: true })
     try{
-        const { responseUser } = await authAPI.me()
+        const { response } = await authAPI.me()
         dispatch({ isLoading: false })
-        if (apiHasError(responseUser)) {
+        if (apiHasError(response)) {
             dispatch(logout)
             return
         }
-        dispatch({ user: responseUser as User })
+        dispatch({ user: response as User })
         dispatch(getChatList)
         window.router.go('/chat')
     } catch(err) {

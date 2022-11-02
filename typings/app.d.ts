@@ -27,6 +27,10 @@ declare global {
         phone: string
         email: string
     }
+
+    export type Response<T> = {
+        response: T
+    }
 }
 
 export {}

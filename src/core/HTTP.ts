@@ -5,26 +5,30 @@ const METHODS = {
     DELETE: 'DELETE'
 }
 
+export type Response<T> = {
+    response: T
+}
+
 export class HTTP {
     public static baseUrl = 'https://ya-praktikum.tech/api/v2/';
 
-    static get(url: string, options = {}){
+    static get<T>(url: string, options = {}): Response<T> | PromiseLike<Response<T>>{
         return this.request(url, {...options, method: METHODS.GET})
     }
 
-    static put(url: string, options = {}){
+    static put<T>(url: string, options = {}): Response<T> | PromiseLike<Response<T>>{
         return this.request(url, {...options, method: METHODS.PUT})
     }
 
-    static post(url: string, options = {}){
-        return this.request(url, {...options, method: METHODS.POST}) 
+    static post<T>(url: string, options = {}): Response<T> | PromiseLike<Response<T>>{
+        return this.request(url, {...options, method: METHODS.POST})
     }
 
-    static delete(url: string, options = {}){
+    static delete<T>(url: string, options = {}): Response<T> | PromiseLike<Response<T>>{
         return this.request(url, {...options, method: METHODS.DELETE})
     }
 
-    static request(url: string, options: { method: any, data?: any }){
+    static request<T>(url: string, options: { method: any, data?: any }): Response<T> | PromiseLike<Response<T>>{
         
         const {method, data} = options
 
@@ -73,9 +77,7 @@ export class HTTP {
                     response = JSON.parse(response);
                 }
 
-                resolve({
-                    response
-                });
+                resolve({ response });
         };
 
         xhr.onabort = reject;

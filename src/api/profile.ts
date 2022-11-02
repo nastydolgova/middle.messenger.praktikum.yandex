@@ -14,8 +14,12 @@ export type UserData = {
     phone: string
 }
 
+export type Response<T> = {
+    response: T
+}
+
 export const profileAPI = {
-    sendProfile: (data: UserData) => HTTP.put('user/profile', { data }),
-    changePassword: (data: PasswordPayload) => HTTP.put('user/password', { data }),
-    setAvatar: (data: FormData) => HTTP.put('user/profile/avatar', { data }),
+    sendProfile: (data: UserData): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.put('user/profile', { data }),
+    changePassword: (data: PasswordPayload): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.put('user/password', { data }),
+    setAvatar: (data: FormData): Response<unknown> | PromiseLike<Response<unknown>> => HTTP.put('user/profile/avatar', { data }),
 }

@@ -16,6 +16,7 @@ export const getChatList = async (
             dispatch({ isLoading: false })
             return
         }
+        //@ts-ignore
         const chatList = response.map((chat: Chat) => ({
             id: chat.id,
             title: chat.title,
@@ -23,7 +24,7 @@ export const getChatList = async (
             unread_count: chat.unread_count,
             time: chat.last_message?.time || '',
             text: chat.last_message?.content || ''
-        }))
+        })) 
         dispatch({chatList})
     } catch(err) {
         console.log(err)
@@ -57,7 +58,7 @@ export const addUser = async (
 ) => {
     dispatch({ isLoading: true })
     try{
-        const response = await chatAPI.addUser(action)
+        const { response } = await chatAPI.addUser(action)
         if (apiHasError(response)) {
             //@ts-ignore
             dispatch({ isLoading: false })
@@ -77,7 +78,7 @@ export const deleteUser = async (
 ) => {
     dispatch({ isLoading: true })
     try{
-        const response = await chatAPI.deleteUser(action)
+        const { response } = await chatAPI.deleteUser(action)
         if (apiHasError(response)) {
             //@ts-ignore
             dispatch({ isLoading: false })
