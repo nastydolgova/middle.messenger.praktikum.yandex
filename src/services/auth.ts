@@ -33,16 +33,7 @@ export const login = async (
             return
         }
         dispatch(getChatList)
-        const responseUser = await authAPI.me()
-        dispatch({ isLoading: false })
-        //@ts-ignore
-        if (responseUser.reason) {
-            dispatch(logout)
-            return
-        }
-    //@ts-ignore
-        dispatch({ user: responseUser  as User})
-        window.router.go('/chat')
+        dispatch(me)
     } catch (err) {
         dispatch(logout)
         console.log(err)
@@ -56,7 +47,6 @@ export const logout = async (dispatch: Dispatch<AppState>) => {
         dispatch({ isLoading: false, user: null })
         if(response) window.router.go('/login')
     } catch (err) {
-        dispatch(logout)
         console.log(err)
     }
 }
