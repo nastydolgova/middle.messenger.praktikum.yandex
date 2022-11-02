@@ -2,7 +2,7 @@ import { profileAPI, UserData, PasswordPayload } from 'api/profile'
 import { authAPI } from 'api/auth'
 import type { Dispatch } from 'core'
 import { apiHasError } from 'utils'
-import { logout } from './auth'
+import { logout, me } from './auth'
 
 export const setAvatar = async (
     dispatch: Dispatch<AppState>,
@@ -18,14 +18,7 @@ export const setAvatar = async (
             dispatch({ isLoading: false })
             return
         }
-        const responseUser = await authAPI.me()
-        dispatch({ isLoading: false })
-        //@ts-ignore
-        if (apiHasError(response)) {
-            return
-        }
-        //@ts-ignore
-        dispatch({ user: responseUser  as User})
+        dispatch(me)
     } catch(err) {
         dispatch(logout)
         console.log(err)
