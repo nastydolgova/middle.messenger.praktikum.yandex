@@ -1,8 +1,24 @@
-import Block from 'utils/Block'
-import { validateForm, ValidateType } from 'helpers/validateForm'
+import { Block } from 'core'
+import { validateForm } from 'helpers/validateForm'
 import { Field } from 'models/FieldModel'
-import Info from 'models/InfoModel'
+import { CoreRouter, Store } from 'core'
+import { withUser, withStore, withRouter } from 'utils'
+import { setAvatar, sendProfile, changePassword } from 'services/profile'
+
 import './edit.css'
+
+type EditPageProps = {
+    router: CoreRouter
+    store: Store<AppState>
+    user: User | null
+    error: string
+    onInput: (e: Event) => void
+    onFocus: () => void
+    onSubmit: (e: Event) => void
+    validate: () => void
+    back?: () => void
+    setAvatar: (e: Event) => void
+}
 
 const fields: Field[] = [
     {
@@ -10,75 +26,76 @@ const fields: Field[] = [
         type: 'text',
         name: 'login',
         label: 'Имя пользователя',
-        value: 'Ivanov',
+        value: '',
     },
     {
         ref: 'emailInputRef',
         type: 'email',
         name: 'email',
         label: 'Почта',
-        value: 'Iv@ya.ru'
+        value: ''
     },
     {
         ref: 'first_nameInputRef',
         type: 'text',
         name: 'first_name',
         label: 'Имя',
-        value: 'Ivan'
+        value: ''
     },
     {
         ref: 'second_nameInputRef',
         type: 'text',
         name: 'second_name',
         label: 'Фамилия',
-        value: 'Ivanov'
+        value: ''
     },
     {
         ref: 'phoneInputRef',
         type: 'phone',
         name: 'phone',
         label: 'Телефон',
-        value: '+7999999999'
+        value: ''
     },
     {   
         type: 'text',
         label: 'Имя в приложении',
         name: 'display_name',
-        value: 'IIVAN'
+        value: ''
     },
     {   
         ref: 'passwordInputRef',
         type: 'password',
         label: 'Старый пароль',
         name: 'oldPassword',
-        value: '1234567Q'
+        value: ''
     },
     {   
         ref: 'passwordInputRef',
         type: 'password',
         label: 'Новый пароль',
         name: 'newPassword',
-        value: '1234567Q'
+        value: ''
     }
 ] as Field[]
 
-export class EditPage extends Block {
+export class EditPage extends Block<EditPageProps> {
+    static componentName = 'EditPage'
 
-    constructor(){
-        super()
+    constructor(props: EditPageProps){
+        super(props)
 
         this.setProps({
-            onInput: (e: any): void  => {
+            onInput: (e: Event): void  => {
                 let errorMsg = validateForm([
                     {type: e.target.name, value: e.target.value},
                 ]) 
                 // @ts-ignore
                 this.refs[e.target.name + 'InputRef'].refs.errorRef.setProps({ text: errorMsg })
-                let field = fields.find((item: Field) => item.name == e.target.name)
-                if(field) field.value = e.target.value
+                let currentInput = fields.find((item: Field) => item.name == e.target.name)
+                if(currentInput) currentInput.value = e.target.value
             },
-            onFocus: (): void => console.log('focus'),
-            onSubmit: (e: any): void => {
+            onFocus: (): void => {},
+            onSubmit: (e: Event): void => {
                 e.preventDefault()
                 this.props.validate()
                 let isCorrect = true
@@ -87,13 +104,29 @@ export class EditPage extends Block {
                     if (this.refs[item.name+'InputRef'].refs.errorRef.props.text != '') isCorrect = false
                 })
                 if (isCorrect) {
-                    let info: any[] = []
+                    let info: string[][] = []
                     fields.forEach((item: Field) => {
-                        if(item.value){
+                        if(item.value && item.name != 'newPassword' && item.name != 'oldPassword'){
                             info.push([item.name , item.value])
                         }
                     })
-                    console.log(Object.fromEntries(info) as Info)
+                    this.props.store.dispatch(sendProfile, Object.fromEntries(info))
+                    let passwords: Array<Array<string|undefined>> = []
+                    fields.forEach((item: Field) => {
+                        if(item.name == 'newPassword' || item.name == 'oldPassword'){
+                            passwords.push([item.name , item.value])
+                        }
+                    })
+                    this.props.store.dispatch(changePassword, Object.fromEntries(passwords))
+                }
+            },
+            setAvatar: (e: Event): void => {
+                e.preventDefault()
+                const avatar = document.getElementById("avatar") as HTMLInputElement
+                const formData: FormData = new FormData()
+                if (avatar.files && avatar!.files[0]) {
+                    formData.append("avatar", avatar!.files[0])
+                    this.props.store.dispatch(setAvatar, formData)
                 }
             },
             validate: (): void => {
@@ -113,22 +146,41 @@ export class EditPage extends Block {
                     //@ts-ignore
                     this.refs[field.name+'InputRef'].refs.errorRef.setProps({ text: errorMsg })
                 })
-            }
+            },
+            back: () => this.back()
         })
     }
 
+    back(){
+        if (this.props.store.getState().user) {
+            this.props.router.go('/profile')
+        } else {
+            this.props.router.go('/login')
+        }
+    }
+
     render() {
+        fields.map(item => {
+            //@ts-ignore
+            if(this.props.user[item.name]){
+                //@ts-ignore
+                item.value = this.props.user[item.name]
+            }
+        })
         return `
             <div class="container">
-                <a href="/profile" class="profile__link--back">
-                    <p class="profile__arrow-back btn__events">
-                        <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="13" y="6.80005" width="11" height="1.6" transform="rotate(-180 13 6.80005)" fill="white"/>
-                            <path d="M6 11L2 6L6 1" stroke="white" stroke-width="1.6"/>
-                        </svg>
-                    </p>
-                </a>
+            <div class="profile__link--back">
+                {{{Button class="profile__arrow-back btn__events" text="Назад" onClick=back}}}
+            </div>
                 <section class="edit">
+                    <form>
+                        <p class="file__description">Для изменения аватара загрузите изображение</p>
+                        <label class="file__label">
+                            <img src="${ this.props.user!.avatar ? `https://ya-praktikum.tech/api/v2/resources` + this.props.user!.avatar : '#'}" width="50" height="50" alt="Аватар">
+                            <input type="file" name="avatar" id="avatar" accept="image/*,image/jpeg">
+                        </label>
+                        {{{Button class="form__btn btn__events" text="Сохранить изображение" onClick=setAvatar}}}
+                    </form>
                     <form>
                     ${(fields.map(item => 
                         `{{{ControlledInput
@@ -142,10 +194,12 @@ export class EditPage extends Block {
                         }}}
                         `
                     )).join(' ')}
-                    {{{Button text="Сохранить" onClick=onSubmit}}}
+                        {{{Button class="form__btn btn__events" text="Изменить" onClick=onSubmit}}}
                     </form>
                 </section>
             </div>
         `
     }
 }
+
+export default withRouter(withStore(withUser(EditPage)))

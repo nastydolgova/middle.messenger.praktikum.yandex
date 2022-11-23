@@ -1,4 +1,4 @@
-import Block from '../../utils/Block'
+import { Block } from 'core'
 
 import './input.css'
 
@@ -25,4 +25,3 @@ export class Input extends Block {
         `
     }
 }
-

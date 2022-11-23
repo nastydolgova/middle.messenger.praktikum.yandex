@@ -38,16 +38,16 @@
     position: absolute;
     width: 929px;
     height: 1px;
-    background: #EAEAEA;
+    background: var(--color-border-form);
     bottom: 0;
 }
 
 .user__popup{
-    background: #FFFFFF;
+    background: var(--color-white);
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
     border-radius: 12px;
-    width: 210px;
-    height: 120px;
+    width: 300px;
+    height: 250px;
     position: absolute;
     right: 0;
     top: 60px;
@@ -71,7 +71,7 @@
 }
 
 .wrp__msgs::-webkit-scrollbar-thumb {
-    background-color: #999999; 
+    background-color: var(--color-text-form);
     border-radius: 4px;
 }
 
@@ -91,6 +91,10 @@
     position: absolute;
     width: 929px;
     height: 1px;
-    background: #EAEAEA;
+    background: var(--color-border-form);
     top: 0;
+}
+
+button.user__button svg{
+    display: inline-block;
 }

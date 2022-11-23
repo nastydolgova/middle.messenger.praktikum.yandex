@@ -1,87 +1,115 @@
-import Block from 'utils/Block'
-import { Field } from 'models/FieldModel'
+import Block from 'core/Block'
+import { withUser, withStore, withRouter } from 'utils'
+import { logout } from 'services/auth'
+import { CoreRouter, Store } from 'core'
+
 import './profile.css'
 
-const fields: Field[] = [
-    {
-        type: 'text',
-        name: 'login',
-        label: 'Имя пользователя',
-        value: 'Ivanov'
-    },
-    {
-        type: 'email',
-        name: 'email',
-        label: 'Почта',
-        value: 'Iv@ya.ru'
-    },
-    {
-        type: 'text',
-        name: 'first_name',
-        label: 'Имя',
-        value: 'Ivan'
-    },
-    {
-        type: 'text',
-        name: 'second_name',
-        label: 'Фамилия',
-        value: 'Ivanov'
-    },
-    {
-        type: 'phone',
-        name: 'phone',
-        label: 'Телефон',
-        value: '+7999999999'
-    }
-] as Field[]
+type ProfilePageProps = {
+    router: CoreRouter
+    store: Store<AppState>
+    user: User | null
+    onLogout?: () => void
+    onNavigateNext?: () => void
+    back?: () => void
+}
 
-export class ProfilePage extends Block {
-    constructor(){
-        super()
+export class ProfilePage extends Block<ProfilePageProps> {
+    static componentName = 'ProfilePage'
+
+    constructor(props: ProfilePageProps) {
+        super(props)
 
         this.setProps({
-            isOpen: false,
+            onLogout: () => this.props.store.dispatch(logout),
+            onNavigateNext: () => this.onNavigateNext(),
+            back: () => this.back(),
         })
     }
 
+    onNavigateNext() {
+        if (this.props.store.getState().user) {
+            this.props.router.go('/edit')
+        } else {
+            this.props.router.go('/login')
+        }
+    }
+
+    back(){
+        if (this.props.store.getState().user) {
+            this.props.router.go('/chat')
+        } else {
+            this.props.router.go('/login')
+        }
+    }
+
     render() {
-        return `
-            <div class="container">
-                <a href="" class="profile__link--back">
-                    <p class="profile__arrow-back btn__events">
-                        <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="13" y="6.80005" width="11" height="1.6" transform="rotate(-180 13 6.80005)" fill="white"/>
-                            <path d="M6 11L2 6L6 1" stroke="white" stroke-width="1.6"/>
-                        </svg>
-                    </p>
-                </a>
-                <section class="profile">
-                    <button class="profile__change-avatar">
-                        <span>Поменять аватар</span>
-                        <img class="profile__img" src="#" width="130" height="130">
-                    </button>
-                    <form> 
-                        ${(fields.map(item => 
-                            `{{{ControlledInput
-                                ref="${item.name + `InputRef`}"
-                                readonly="readonly"
-                                type="${item.type}"
-                                name="${item.name}"
-                                label="${item.label}"
-                                value="${item.value}"
-                            }}}
-                            `
-                        )).join(' ')}
-                    </form>
-                    <div class="profile__events">
-                        <a href="/edit" class="profile__link">Изменить данные</a>
-                        <a href="/login" class="profile__link profile__link--exit">Выйти</a> 
+        if(this.props.user){
+            return  `
+                <div class="container">
+                    <div class="profile__link--back">
+                        {{{Button class="profile__arrow-back btn__events" text="Назад" onClick=back}}}
                     </div>
-                    {{#if isOpen}}
-                        {{{ AvatarPopUp }}}
-                    {{/if}}
-                </section>
-            </div>
-        `
+                    <section class="profile">
+                        <img class="profile__img" 
+                            src="${ this.props.user!.avatar != null ? `https://ya-praktikum.tech/api/v2/resources` + this.props.user!.avatar : '#'}" 
+                            width="130" height="130" alt="Аватар"
+                        >
+                        <form>
+                            {{{ControlledInput
+                                ref="loginInputRef"
+                                readonly="readonly"
+                                type="text"
+                                name="login"
+                                label="Имя пользователя"
+                                value="${this.props.user!.login}"
+                            }}}
+                            {{{ControlledInput
+                                ref="emailInputRef"
+                                readonly="readonly"
+                                type="email"
+                                name="email"
+                                label="Почта"
+                                value="${this.props.user!.email}"
+                            }}}
+                            {{{ControlledInput
+                                ref="first_nameInputRef"
+                                readonly="readonly"
+                                type="text"
+                                name="first_name"
+                                label="Имя"
+                                value="${this.props.user!.first_name}"
+                            }}}
+                            {{{ControlledInput
+                                ref="second_nameInputRef"
+                                readonly="readonly"
+                                type="text"
+                                name="second_name"
+                                label="Фамилия"
+                                value="${this.props.user!.second_name}"
+                            }}}
+                            {{{ControlledInput
+                                ref="phoneInputRef"
+                                readonly="readonly"
+                                type="phone"
+                                name="phone"
+                                label="Телефон"
+                                value="${this.props.user!.phone}"
+                            }}}
+                        </form>
+                        <div class="profile__events">
+                            {{{Button class="profile__link profile__link-list" text="Изменить данные" onClick=onNavigateNext}}}
+                            {{{Button class="profile__link profile__link-list profile__link--exit" text="Выйти" onClick=onLogout}}}
+                        </div>
+                    </section>
+                </div>
+            `
+        } else {
+            return `
+                <p>Вы не авторизованы</p>
+            `
+        }
     }
 }
+
+export default withRouter(withStore(withUser(ProfilePage)))

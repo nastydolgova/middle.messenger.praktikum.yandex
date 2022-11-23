@@ -13,7 +13,7 @@
 }
 
 .sent__field::placeholder {
-    color: #999;
+    color: var(--color-text-form);
     font-family: Segoe UI, Tahoma, Verdana, sans-serif;
 }
 

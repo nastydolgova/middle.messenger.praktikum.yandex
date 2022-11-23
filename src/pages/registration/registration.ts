@@ -1,9 +1,24 @@
-import Block from 'utils/Block'
-import { validateForm, ValidateType } from 'helpers/validateForm'
+import { Block } from 'core'
+import { validateForm } from 'helpers/validateForm'
 import { Field } from 'models/FieldModel'
 import Info from 'models/InfoModel'
+import { withUser, withStore, withRouter } from 'utils'
+import { CoreRouter, Store } from 'core'
+import { signup } from 'services/auth'
 
 import './registration.css'
+
+type RegPageProps = {
+    router: CoreRouter
+    store: Store<AppState>
+    user: User | null
+    back?: () => void
+    onInput: (e: Event) => void
+    onFocus: () => void
+    onSubmit: (e: Event) => void
+    validate: () => void
+    onLog: () => void
+}
 
 const fields: Field[] = [
     {
@@ -38,12 +53,13 @@ const fields: Field[] = [
     },
 ] as Field[]
 
-export class RegPage extends Block {
-    constructor(){
-        super()
+export class RegPage extends Block<RegPageProps> {
+    static componentName = 'RegPage'
+    constructor(props: RegPageProps){
+        super(props)
 
         this.setProps({
-            onInput: (e: any): void  => {
+            onInput: (e: Event): void  => {
                 let errorMsg = validateForm([
                     {type: e.target.name, value: e.target.value},
                 ]) 
@@ -52,23 +68,23 @@ export class RegPage extends Block {
                 let field = fields.find((item: Field) => item.name == e.target.name)
                 if(field) field.value = e.target.value
             },
-            onFocus: (): void => console.log('focus'),
-            onSubmit: (e: any): void => {
+            onFocus: (): void => {},
+            onSubmit: (e: Event): void => {
                 e.preventDefault()
                 this.props.validate()
                 let isCorrect = true
                 fields.forEach((item: Field) => {
                     //@ts-ignore
-                    if (this.refs[item.ref].refs.errorRef.props.text != '') isCorrect = false
+                    if (this.refs[item.name + `InputRef`].refs.errorRef.props.text != '') isCorrect = false
                 })
                 if (isCorrect) {
-                    let info: any[] = []
+                    let info: string[][] = []
                     fields.forEach((item: Field) => {
                         if(item.value){
                             info.push([item.name , item.value])
                         }
                     })
-                    console.log(Object.fromEntries(info) as Info)
+                    this.props.store.dispatch(signup, Object.fromEntries(info) as Info)
                 }
             },
             validate: (): void => {
@@ -79,8 +95,11 @@ export class RegPage extends Block {
                         {type: inputEl.name, value: inputEl.value},
                     ]) 
                     //@ts-ignore
-                    this.refs[field.ref].refs.errorRef.setProps({ text: errorMsg })
+                    this.refs[field.name + `InputRef`].refs.errorRef.setProps({ text: errorMsg })
                 })
+            },
+            onLog: (): void => {
+                this.props.router.go('/login')
             }
         })
     }
@@ -88,7 +107,7 @@ export class RegPage extends Block {
     render() {
         return `
             <div class="container">
-                <section class="login__section">
+                <section class="login__section registration">
                     <h1 class="login__title"> Регистрация </h1>
                         ${(fields.map(item => 
                             `{{{ControlledInput
@@ -101,10 +120,12 @@ export class RegPage extends Block {
                             }}}
                             `
                         )).join(' ')}
-                    {{{Button text="Зарегистрироваться" onClick=onSubmit}}}
-                    <a href="/login" class="form__link btn__events">Войти</a>
-                </section>
+                    {{{Button class="form__btn btn__events" text="Зарегистрироваться" onClick=onSubmit}}}
+                    {{{Button class="form__link btn__events" text="Войти" onClick=onLog}}}
+                    </section>
             </div>
         `
     }
 }
+
+export default withRouter(withStore(withUser(RegPage)))

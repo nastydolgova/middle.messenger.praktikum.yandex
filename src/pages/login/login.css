@@ -1,5 +1,5 @@
 .login__error{
     align-self: flex-start;
-    color: #FF2F2F;
+    color: var(--color-exit);
     font-size: 9px;
 }

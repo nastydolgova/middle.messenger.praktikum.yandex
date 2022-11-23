@@ -8,8 +8,10 @@
 }
 
 .error__link{
-    color: #999;
+    color: var(--color-text-form);
     width: 300px;
     text-decoration: none;
     text-align: center;
+    background-color: transparent;
+    border: none;
 }

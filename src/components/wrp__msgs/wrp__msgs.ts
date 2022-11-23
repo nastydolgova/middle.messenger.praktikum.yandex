@@ -1,30 +1,35 @@
-import Block from '../../utils/Block'
+import { Block } from 'core'
+import { CoreRouter, Store } from 'core'
+
 
 import './wrp__msgs.css'
 
-export class WrpMsgs extends Block {
+interface WrpMsgsProps {
+    router: CoreRouter
+    store: Store<AppState>
+    user: User | null
+}
+
+export class WrpMsgs extends Block<WrpMsgsProps> {
     static componentName = 'WrpMsgs'
 
+    constructor(props: WrpMsgsProps) {
+        super(props)
+    }
+    // user_id
     protected render(): string {
+        let messages = this.props.store.getState().messages
+        let user = this.props.store.getState().user
         return `
             <div class="wrp__msgs">
-                <span class="msgs__date">
-                    19 июня
-                </span>
-                <div class="msgs__item msgs__item--other">
-                    <p class="msgs__text">  
-                        Привет! Смотри, тут всплыл интересный кусок лунной космической истории — 
-                        НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов
-                        на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову
-                        говоря, все тушки этих камер все еще находятся на поверхности Луны, так как
-                        астронавты с собой забрали только кассеты с пленкой.
-                    </p>
-                    {{{ MsgInfo }}}
-                </div>
-                <div class="msgs__item msgs__item--my">
-                    <p class="msgs__text">Круто!</p>
-                    {{{ MsgInfo }}}
-                </div>
+                ${(messages.map(item => 
+                    `<div class="msgs__item ${item.user_id == user?.id ? 'msgs__item--my' : 'msgs__item--other'} ">
+                        <p class="msgs__text">  
+                            ${item.content}
+                        </p>
+                    </div>
+                    `
+                )).join(' ')}
             </div>
         `
     }

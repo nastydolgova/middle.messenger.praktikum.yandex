@@ -1,4 +1,4 @@
-import Block from '../../utils/Block'
+import { Block } from 'core'
 
 import './textarea.css'
 
@@ -23,4 +23,3 @@ export class TextArea extends Block {
         `
     }
 }
-

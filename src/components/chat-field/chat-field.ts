@@ -1,30 +1,45 @@
-import Block from '../../utils/Block'
-
+import { Block } from 'core'
+import { CoreRouter, Store } from 'core'
 import './chat-field.css'
 
-export class ChatField extends Block {
+type ChatFieldProps = {
+    router: CoreRouter
+    store: Store<AppState>
+    isPopUpOpen: boolean
+    chatId: number
+    isOpen?: () => void
+}
+
+export class ChatField extends Block<ChatFieldProps> {
     static componentName = 'ChatField'
+
+    constructor(props: ChatFieldProps) {
+        super(props)
+
+        this.setProps({
+            isPopUpOpen: false,
+            isOpen: () => {
+                this.props.isPopUpOpen = !this.props.isPopUpOpen
+            }
+        })
+    }
     
     protected render(): string {
         return `
             <section class="chat-field">
                 <div class="chat__wrp">
                     <div class="wrp__user">
-                        <img class="user__img" src="#" width="34" height="34" alt="img">
-                        <p class="user__name"> Вася </p>
-                        <button class="user__button btn__events">
-                            <svg width="3" height="16" viewBox="0 0 3 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="1.5" cy="2" r="1.5" fill="#1E1E1E"/>
-                                <circle cx="1.5" cy="8" r="1.5" fill="#1E1E1E"/>
-                                <circle cx="1.5" cy="14" r="1.5" fill="#1E1E1E"/>
-                            </svg>
-                        </button>
-                        <div class="user__popup hidden">
-                            {{{UserPopup}}}
-                        </div>
+                        <img class="user__img" src="#" width="34" height="34" alt="Аватар">
+                        <p class="user__name"> {{ chatId }} </p>
+                        {{{Button class="user__button btn__events" onClick=isOpen}}}
+                        {{#if isPopUpOpen}}
+                            <div class="user__popup">
+                                {{{UserPopup chatId=chatId router=router store=store}}}
+                            </div>
+                        {{/if}}
                     </div>
-                    {{{ WrpMsgs }}}
-                    {{{ SendMsg }}}
+                    {{{ WrpMsgs router=router store=store}}}
+                    {{{ SendMsg  router=router store=store}}}
                 <div>
             </section>
         `

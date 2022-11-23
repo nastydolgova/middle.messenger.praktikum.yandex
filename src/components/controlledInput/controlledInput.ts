@@ -1,5 +1,5 @@
 import { validateForm, ValidateType } from 'helpers/validateForm'
-import Block from '../../utils/Block'
+import { Block } from 'core'
 import './controlledInput.css'
 
 interface ControlledInputProps {
