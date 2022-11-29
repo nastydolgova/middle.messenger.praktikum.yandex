@@ -4,6 +4,6 @@ module.exports = {
         '^.+\\.ts?$': 'babel-jest',
     },
     setupFilesAfterEnv: [
-        "<rootDir>/src/tests/setup.ts"
+        '<rootDir>/src/tests/setup.ts',
     ],
-};
+}

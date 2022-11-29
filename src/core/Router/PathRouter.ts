@@ -1,7 +1,7 @@
 import { CoreRouter } from "./CoreRouter"
 
 export class PathRouter implements CoreRouter {
-    private routes: Record<string, Function> = {}
+    routes: Record<string, Function> = {}
 
     private isStarted = false
 

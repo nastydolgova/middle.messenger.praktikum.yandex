@@ -6,9 +6,8 @@
         "start": "npm run build && node ./server.js",
         "build": "webpack",
         "serve": "webpack serve",
-        "dev": "npm-run-all --parallel dev:* && webpack serve",
-        "dev:eslint": "eslint . --fix",
-        "dev:stylelint": "stylelint \"**/*.scss\" --fix",
+        "dev": "npm-run-all --parallel eslint && webpack serve",
+        "eslint": "eslint --fix",
         "test": "jest"
     },
     "browserslist": "> 0.5%, last 2 versions, not dead",
@@ -25,11 +24,6 @@
         "api": "./src/api",
         "models": "./src/models",
         "helpers": "./src/helpers"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm-run-all --parallel test dev:*"
-        }
     },
     "devDependencies": {
         "@babel/preset-env": "7.20.2",
