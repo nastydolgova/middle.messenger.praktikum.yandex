@@ -49,13 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //@ts-ignore
     store.on('changed', (prevState, nextState) => {
-        if (process.env.DEBUG) {
-        console.log(
-            '%cstore updated',
-            'background: #222; color: #bada55',
-            nextState,
-        )
-        }
     })
 
     initRouter(router, store)

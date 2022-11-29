@@ -1,21 +1,26 @@
 {
-  "compilerOptions": {
-    "target": "es2017", 
-    "module": "commonjs",
-    "rootDir": "./src",
-    "baseUrl": "./src",
-    "typeRoots": ["node_modules/@types", "typings/app.d.ts"],
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "strictPropertyInitialization": false
-  }
+    "compilerOptions": {
+        "target": "es2017", 
+        "module": "commonjs",
+        "rootDir": "./src",
+        "baseUrl": "./src",
+        "typeRoots": ["node_modules/@types", "typings/app.d.ts"],
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "strictPropertyInitialization": false
+    },
+    "exclude": [
+        "node_modules",
+        "./src/**/*.spec.ts",
+        "./src/**/*.test.ts"
+    ]
 }
