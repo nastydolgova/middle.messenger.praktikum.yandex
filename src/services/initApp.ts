@@ -8,11 +8,9 @@ export async function initApp(dispatch: Dispatch<AppState>) {
 
     try {
         const { response } = await authAPI.me()
-        //@ts-ignore
         if (apiHasError(response)) {
             return
         }
-        //@ts-ignore
         dispatch({ user: response as User })
     } catch (err) {
         console.error(err)

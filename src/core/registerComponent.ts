@@ -28,8 +28,7 @@ export default function registerComponent<Props extends any>(
             (Object.keys(hash) as any).forEach((key: keyof Props) => {
                 if (this[key] && typeof hash[key] === 'string') {
                 hash[key] = hash[key].replace(
-                    //@ts-ignore
-                    new RegExp(`{{${key}}}`, 'i'),
+                    new RegExp(`{{${String(key)}}}`, 'i'),
                     this[key],
                 )
                 }

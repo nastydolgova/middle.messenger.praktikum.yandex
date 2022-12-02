@@ -9,4 +9,5 @@ export type Chat = {
         time: string
         content: string
     }
+    avatar?: string
 }

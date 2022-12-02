@@ -3,7 +3,7 @@ import { CoreRouter, Store } from 'core'
 import { withUser, withStore, withRouter } from 'utils'
 import { addChat } from 'services/chat'
 import { Chat } from 'models/ChatModel'
-import { getToken, connectUserToChat } from 'services/messages'
+import { getToken } from 'services/messages'
 import './chat.css'
 
 type ChatPageProps = {
@@ -30,8 +30,7 @@ export class ChatPage extends Block<ChatPageProps> {
                 if (this.props.store.getState().user) {
                 this.props.router.go('/profile')
                 } else {
-                    //@ts-ignore
-                    window.location.pathname('/login')
+                    this.props.router.go('/login')
                 }
             },
             addChat: () => {
@@ -39,6 +38,7 @@ export class ChatPage extends Block<ChatPageProps> {
                 this.props.store.dispatch(addChat, {title: inputEl.value})
             },
             selectChat: (e: Event) => {
+                //@ts-expect-error
                 this.props.activeChat = e.path[1].id
                 this.props.store.dispatch(getToken, [this.props.user?.id, this.props.activeChat])
             }

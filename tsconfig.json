@@ -16,7 +16,8 @@
         "skipLibCheck": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
-        "strictPropertyInitialization": false
+        "strictPropertyInitialization": false,
+        "useUnknownInCatchVariables": false
     },
     "exclude": [
         "node_modules",

@@ -25,11 +25,14 @@ export class LoginPage extends Block<LoginPageProps> {
         this.setProps({
             error: '',
             onInput: (e: Event): void  => {
+                const target = e.target as HTMLButtonElement
+                if (target === null) {
+                    throw new Error('target can not be null');
+                }
                 let errorMsg = validateForm([
-                    {type: e.target.name, value: e.target.value},
+                    {type: target.name, value: target.value},
                 ]) 
-                // @ts-ignore
-                this.refs[e.target.name + 'InputRef'].refs.errorRef.setProps({ text: errorMsg })
+                this.refs[target.name + 'InputRef'].refs.errorRef.setProps({ text: errorMsg })
             },
             onFocus: (): void => {},
             onSubmit: (): void => {
@@ -39,13 +42,11 @@ export class LoginPage extends Block<LoginPageProps> {
                 const loginErrorMsg = validateForm([
                     {type: ValidateType.Login, value: loginEl.value},
                 ]) 
-                //@ts-ignore
                 this.refs.loginInputRef.refs.errorRef.setProps({ text: loginErrorMsg })
 
                 const passwordErrorMsg = validateForm([
                     {type: ValidateType.Password, value: passwordEl.value}
                 ])
-                //@ts-ignore
                 this.refs.passwordInputRef.refs.errorRef.setProps({ text: passwordErrorMsg })
                 
                 if(!loginErrorMsg && !passwordErrorMsg) {

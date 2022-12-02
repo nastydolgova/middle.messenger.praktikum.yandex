@@ -6,13 +6,12 @@ import { logout } from './auth'
 
 export const getChatList = async (
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
 ) => {
     dispatch({ isLoading: true })
     try {
         const { response } = await chatAPI.getChatList()
         if (apiHasError(response)) {
-            //@ts-ignore
             dispatch({ isLoading: false })
             return
         }
@@ -20,7 +19,7 @@ export const getChatList = async (
         const chatList = response.map((chat: Chat) => ({
             id: chat.id,
             title: chat.title,
-            chat_avatar: '#',
+            chat_avatar: chat.avatar ? `https://ya-praktikum.tech/api/v2/resources` + chat.avatar : '#',
             unread_count: chat.unread_count,
             time: chat.last_message?.time || '',
             text: chat.last_message?.content || ''
@@ -33,14 +32,13 @@ export const getChatList = async (
 
 export const addChat = async (
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
     action: AddChatData,
 ) => {
     try{
         dispatch({ isLoading: true })
         const { response } = await chatAPI.addChat(action)
         if (apiHasError(response)) {
-            //@ts-ignore
             dispatch({ isLoading: false })
             return
         }
@@ -53,14 +51,13 @@ export const addChat = async (
 
 export const addUser = async (
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
     action: AddUserData,
 ) => {
     dispatch({ isLoading: true })
     try{
         const { response } = await chatAPI.addUser(action)
         if (apiHasError(response)) {
-            //@ts-ignore
             dispatch({ isLoading: false })
             return
         }
@@ -73,14 +70,13 @@ export const addUser = async (
 
 export const deleteUser = async (
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
     action: AddUserData,
 ) => {
     dispatch({ isLoading: true })
     try{
         const { response } = await chatAPI.deleteUser(action)
         if (apiHasError(response)) {
-            //@ts-ignore
             dispatch({ isLoading: false })
             return
         }

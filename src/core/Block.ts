@@ -27,7 +27,7 @@ export default class Block<P = any> {
     eventBus: () => EventBus<Events>
 
     protected state: any = {}
-    protected refs: { [key: string]: Block } = {}
+    public refs: { [key: string]: Block } = {}
 
     public static componentName?: string
 
@@ -101,7 +101,7 @@ export default class Block<P = any> {
         this._render()
     }
 
-    componentDidUpdate(oldProps: P, newProps: P) {
+    componentDidUpdate(_oldProps: P, _newProps: P) {
         return true
     }
 
@@ -109,7 +109,7 @@ export default class Block<P = any> {
         if (!nextProps) {
             return
         }
-        //@ts-ignore
+        //@ts-expect-error
         Object.assign(this.props, nextProps)
     }
 
