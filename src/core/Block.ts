@@ -69,7 +69,7 @@ export default class Block<P = any> {
         this._element = this._createDocumentElement('div')
     }
 
-    protected getStateFromProps(props: any): void {
+    protected getStateFromProps(_props: any): void {
         this.state = {}
     }
 
@@ -84,7 +84,7 @@ export default class Block<P = any> {
         this.componentDidMount(props)
     }
 
-    componentDidMount(props: P) {}
+    componentDidMount(_props: P) {}
 
     private _componentWillUnmount() {
         this.eventBus().destroy()
