@@ -19,15 +19,14 @@ type SingUpPayload = {
 
 export const login = async (
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
     action: LoginPayload,
 ) => {
     dispatch({ isLoading: true })
     try {
         const { response } = await authAPI.login(action)
-            //@ts-ignore
+        //@ts-ignore
         if (response.reason) {
-            //@ts-ignore
             dispatch({ isLoading: false })
             window.router.go('/login')
             return
@@ -53,7 +52,7 @@ export const logout = async (dispatch: Dispatch<AppState>) => {
 
 export const signup = async (
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
     action: SingUpPayload,
 ) => {
     dispatch({ isLoading: true })
@@ -72,7 +71,7 @@ export const signup = async (
 
 export const me = async(
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
 ) => {
     dispatch({ isLoading: true })
     try{

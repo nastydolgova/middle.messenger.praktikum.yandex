@@ -60,13 +60,16 @@ export class RegPage extends Block<RegPageProps> {
 
         this.setProps({
             onInput: (e: Event): void  => {
+                const target = e.target as HTMLButtonElement
+                if (target === null) {
+                    throw new Error('target can not be null');
+                }
                 let errorMsg = validateForm([
-                    {type: e.target.name, value: e.target.value},
+                    {type: target.name, value: target.value},
                 ]) 
-                // @ts-ignore
-                this.refs[e.target.name + 'InputRef'].refs.errorRef.setProps({ text: errorMsg })
-                let field = fields.find((item: Field) => item.name == e.target.name)
-                if(field) field.value = e.target.value
+                this.refs[target.name + 'InputRef'].refs.errorRef.setProps({ text: errorMsg })
+                let field = fields.find((item: Field) => item.name == target.name)
+                if(field) field.value = target.value
             },
             onFocus: (): void => {},
             onSubmit: (e: Event): void => {
@@ -74,7 +77,6 @@ export class RegPage extends Block<RegPageProps> {
                 this.props.validate()
                 let isCorrect = true
                 fields.forEach((item: Field) => {
-                    //@ts-ignore
                     if (this.refs[item.name + `InputRef`].refs.errorRef.props.text != '') isCorrect = false
                 })
                 if (isCorrect) {
@@ -94,7 +96,6 @@ export class RegPage extends Block<RegPageProps> {
                     let errorMsg = validateForm([
                         {type: inputEl.name, value: inputEl.value},
                     ]) 
-                    //@ts-ignore
                     this.refs[field.name + `InputRef`].refs.errorRef.setProps({ text: errorMsg })
                 })
             },

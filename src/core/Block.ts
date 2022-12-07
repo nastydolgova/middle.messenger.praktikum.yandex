@@ -21,13 +21,13 @@ export default class Block<P = any> {
     public id = nanoid(6)
 
     protected _element: Nullable<HTMLElement> = null
-    protected readonly props: P
+    readonly props: P
     protected children: { [id: string]: Block } = {}
 
     eventBus: () => EventBus<Events>
 
     protected state: any = {}
-    protected refs: { [key: string]: Block } = {}
+    public refs: { [key: string]: Block } = {}
 
     public static componentName?: string
 
@@ -69,7 +69,7 @@ export default class Block<P = any> {
         this._element = this._createDocumentElement('div')
     }
 
-    protected getStateFromProps(props: any): void {
+    protected getStateFromProps(_props: any): void {
         this.state = {}
     }
 
@@ -84,7 +84,7 @@ export default class Block<P = any> {
         this.componentDidMount(props)
     }
 
-    componentDidMount(props: P) {}
+    componentDidMount(_props: P) {}
 
     private _componentWillUnmount() {
         this.eventBus().destroy()
@@ -101,7 +101,7 @@ export default class Block<P = any> {
         this._render()
     }
 
-    componentDidUpdate(oldProps: P, newProps: P) {
+    componentDidUpdate(_oldProps: P, _newProps: P) {
         return true
     }
 
@@ -109,7 +109,7 @@ export default class Block<P = any> {
         if (!nextProps) {
             return
         }
-        //@ts-ignore
+        //@ts-expect-error
         Object.assign(this.props, nextProps)
     }
 
